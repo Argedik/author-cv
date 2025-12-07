@@ -1,0 +1,44 @@
+// BookCard Mobile Styles - Single Responsibility: Mobile responsive styles
+@import './BookCard.variables';
+
+@media (max-width: $breakpoint-mobile) {
+  .bookCard:active {
+    animation: bookPickup 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .bookImageContainer {
+    position: relative;
+    z-index: 3;
+    border-right: none;
+    box-shadow: 
+      0 20px 40px -10px rgba(0, 0, 0, 0.15),
+      0 10px 20px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .bookContent {
+    margin-top: -30px;
+    padding-top: 50px;
+    padding-left: $spacing-lg;
+    padding-right: $spacing-lg;
+    background: $color-primary-light;
+    position: relative;
+    z-index: $z-index-base;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0 0 $radius-md $radius-md;
+    margin-left: 0;
+    margin-right: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .mobileExpandedView {
+    display: block;
+  }
+
+  .bookCard {
+    cursor: pointer;
+  }
+}
+

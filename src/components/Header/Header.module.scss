@@ -1,0 +1,276 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 20px;
+  background-color: rgba(245, 230, 211, 0.6);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  z-index: 1000;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 2px 8px rgba(180, 150, 120, 0.08),
+    0 1px 3px rgba(160, 130, 100, 0.12);
+  border-bottom: 2px solid rgba(232, 213, 183, 0.4);
+}
+
+// Vintage paper texture on header
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 69, 19, 0.02) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(160, 130, 100, 0.015) 3px
+    );
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.header.scrolled {
+  background-color: rgba(245, 230, 211, 0.75);
+  box-shadow: 
+    0 4px 16px rgba(180, 150, 120, 0.12),
+    0 2px 8px rgba(160, 130, 100, 0.15),
+    0 1px 4px rgba(140, 110, 80, 0.1);
+  padding: 12px 30px;
+  border-bottom: 1px solid rgba(232, 213, 183, 0.4);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #6b5b4f;
+  letter-spacing: 1.5px;
+  font-family: 'Georgia', serif;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+  text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.1);
+}
+
+.nav {
+  display: none;
+  gap: 32px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.navLink {
+  font-size: 15px;
+  font-weight: 400;
+  color: #6b5b4f;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  padding-bottom: 4px;
+}
+
+.navLink:hover {
+  color: #8b7a6b;
+}
+
+.navLink.active {
+  font-weight: 700;
+  color: #6b5b4f;
+}
+
+.navLink.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #d4c4a0 0%, #b8a68a 100%);
+  border-radius: 1px;
+}
+
+.menuButton {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+  position: relative;
+}
+
+.menuButton span {
+  width: 22px;
+  height: 2px;
+  background-color: #6b5b4f;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.menuButton.menuOpen span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.menuButton.menuOpen span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.menuButton.menuOpen span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5e6d3 0%, #e8d5b7 50%, #d4c4a0 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    -4px 0 24px rgba(180, 150, 120, 0.15),
+    -2px 0 12px rgba(160, 130, 100, 0.2),
+    -1px 0 6px rgba(140, 110, 80, 0.1);
+  padding-top: 80px;
+}
+
+.mobileMenuOpen {
+  right: 0;
+}
+
+.closeMenuButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(107, 91, 79, 0.2);
+  color: #6b5b4f;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1002;
+  line-height: 1;
+}
+
+.closeMenuButton:hover {
+  background: rgba(107, 91, 79, 0.3);
+  transform: scale(1.1);
+}
+
+.closeMenuButton:active {
+  transform: scale(0.95);
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 0;
+  margin-top: 20px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  animation: fadeIn 0.3s ease;
+}
+
+.mobileNavLink {
+  font-size: 18px;
+  font-weight: 400;
+  color: #6b5b4f;
+  text-decoration: none;
+  padding: 16px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.mobileNavLink:hover {
+  background-color: rgba(232, 213, 183, 0.3);
+  color: #8b7a6b;
+}
+
+.mobileNavLink.active {
+  font-weight: 700;
+  color: #6b5b4f;
+  background-color: rgba(232, 213, 183, 0.2);
+}
+
+.mobileNavLink.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60%;
+  background: linear-gradient(180deg, #d4c4a0 0%, #b8a68a 100%);
+  border-radius: 0 2px 2px 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Tablet ve üzeri
+@media (min-width: 768px) {
+  .header {
+    padding: 30px 30px;
+  }
+
+  .header.scrolled {
+    padding: 16px 40px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .nav {
+    display: flex;
+  }
+
+  .menuButton {
+    display: none;
+  }
+}
+

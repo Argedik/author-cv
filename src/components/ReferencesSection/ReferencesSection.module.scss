@@ -1,0 +1,423 @@
+// References Section Styles - 3D Animated Cards
+
+// Variables
+$primary-sepia: #5c4a3d;
+$secondary-sepia: #8b7355;
+$accent-gold: #c4a35a;
+$accent-gold-light: #dbc17a;
+$text-dark: #3d2e1f;
+$bg-dark: #2a2218;
+$bg-medium: #3d3228;
+
+.referencesSection {
+  position: relative;
+  padding: 100px 20px;
+  background: 
+    // Koyu vintage arkaplan
+    linear-gradient(135deg, $bg-dark 0%, $bg-medium 50%, $bg-dark 100%);
+  overflow: hidden;
+  perspective: 1500px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      // Yıldız deseni
+      radial-gradient(circle at 20% 30%, rgba($accent-gold, 0.03) 0%, transparent 1px),
+      radial-gradient(circle at 80% 70%, rgba($accent-gold, 0.03) 0%, transparent 1px),
+      radial-gradient(circle at 40% 80%, rgba($accent-gold, 0.02) 0%, transparent 1px),
+      radial-gradient(circle at 60% 20%, rgba($accent-gold, 0.02) 0%, transparent 1px),
+      // Kağıt dokusu
+      repeating-linear-gradient(
+        45deg,
+        transparent 0px,
+        transparent 40px,
+        rgba(255, 255, 255, 0.01) 40px,
+        rgba(255, 255, 255, 0.01) 41px
+      );
+    background-size: 200px 200px, 150px 150px, 180px 180px, 220px 220px, auto;
+    pointer-events: none;
+  }
+}
+
+// Dekoratif üst
+.decorativeTop {
+  position: relative;
+  height: 40px;
+  margin-bottom: 40px;
+  z-index: 1;
+}
+
+.ornamentWave {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40'%3E%3Cpath d='M0 20 Q 50 0, 100 20 T 200 20' stroke='%23c4a35a' fill='none' stroke-width='2' opacity='0.6'/%3E%3Cpath d='M0 25 Q 50 5, 100 25 T 200 25' stroke='%23c4a35a' fill='none' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+// Başlık
+.headerWrapper {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.subtitle {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: $accent-gold;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-family: 'Georgia', serif;
+  color: #f4ead5;
+  margin: 0;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+
+  @media (min-width: 768px) {
+    font-size: 3.5rem;
+  }
+}
+
+.titleDecoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.decorLine {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $accent-gold, transparent);
+
+  @media (min-width: 768px) {
+    width: 120px;
+  }
+}
+
+.decorSymbol {
+  font-size: 1.5rem;
+  color: $accent-gold;
+}
+
+// Carousel Container
+.carouselContainer {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 600px;
+  z-index: 1;
+
+  @media (min-width: 992px) {
+    min-height: 500px;
+  }
+}
+
+.carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @media (min-width: 992px) {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 60px;
+  }
+}
+
+// Sol ve sağ track
+.trackLeft,
+.trackRight {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  flex: 1;
+
+  @media (min-width: 992px) {
+    max-width: 45%;
+  }
+}
+
+// Referans kartları
+.referenceCard {
+  position: relative;
+  transform-style: preserve-3d;
+  opacity: 1;
+  transform: translateX(0) rotateY(0);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &:hover {
+    transform: translateY(-10px) scale(1.02);
+    z-index: 10;
+
+    .cardGlow {
+      opacity: 1;
+    }
+
+    .cardInner {
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba($accent-gold, 0.15);
+    }
+  }
+}
+
+.cardInner {
+  position: relative;
+  padding: 30px;
+  background: linear-gradient(135deg, rgba(60, 50, 40, 0.95) 0%, rgba(45, 38, 30, 0.98) 100%);
+  border: 1px solid rgba($accent-gold, 0.2);
+  border-radius: 12px;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, $accent-gold, transparent);
+    border-radius: 12px 12px 0 0;
+  }
+}
+
+.cardGlow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, rgba($accent-gold, 0.3) 0%, transparent 50%, rgba($accent-gold, 0.3) 100%);
+  border-radius: 14px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+  filter: blur(8px);
+}
+
+.quoteIcon {
+  font-size: 2.5rem;
+  color: $accent-gold;
+  opacity: 0.4;
+  line-height: 1;
+  margin-bottom: 15px;
+}
+
+.quoteText {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(244, 234, 213, 0.9);
+  font-style: italic;
+  font-family: 'Georgia', serif;
+  margin: 0 0 25px;
+
+  @media (min-width: 768px) {
+    font-size: 1.05rem;
+  }
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 1px solid rgba($accent-gold, 0.15);
+}
+
+.authorAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $accent-gold 0%, #8b6914 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $bg-dark;
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.authorDetails {
+  flex: 1;
+}
+
+.authorName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f4ead5;
+  margin: 0 0 4px;
+}
+
+.authorTitle {
+  font-size: 0.85rem;
+  color: $accent-gold-light;
+  margin: 0 0 2px;
+}
+
+.authorOrg {
+  font-size: 0.8rem;
+  color: rgba(244, 234, 213, 0.6);
+  margin: 0;
+}
+
+// Merkez dekorasyon
+.centerDecoration {
+  display: none;
+
+  @media (min-width: 992px) {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+  }
+}
+
+.centerOrb {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, $accent-gold-light 0%, $accent-gold 50%, #8b6914 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 30px rgba($accent-gold, 0.4),
+    0 0 60px rgba($accent-gold, 0.2),
+    inset 0 -5px 15px rgba(0, 0, 0, 0.3);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.orbIcon {
+  font-size: 2rem;
+  color: $bg-dark;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.orbRings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba($accent-gold, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+
+  &:nth-child(1) {
+    width: 120px;
+    height: 120px;
+    animation: ringPulse 3s ease-in-out infinite;
+  }
+
+  &:nth-child(2) {
+    width: 160px;
+    height: 160px;
+    animation: ringPulse 3s ease-in-out infinite 0.5s;
+  }
+
+  &:nth-child(3) {
+    width: 200px;
+    height: 200px;
+    animation: ringPulse 3s ease-in-out infinite 1s;
+  }
+}
+
+// Dekoratif alt
+.decorativeBottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.patternLine {
+  flex: 1;
+  max-width: 150px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $accent-gold, transparent);
+}
+
+.centerMark {
+  font-size: 1.5rem;
+  color: $accent-gold;
+  opacity: 0.7;
+}
+
+// Animasyonlar
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 30px rgba($accent-gold, 0.4),
+      0 0 60px rgba($accent-gold, 0.2),
+      inset 0 -5px 15px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow:
+      0 0 40px rgba($accent-gold, 0.5),
+      0 0 80px rgba($accent-gold, 0.3),
+      inset 0 -5px 15px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@keyframes ringPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+// Mobil için continuous scroll animation
+@media (max-width: 991px) {
+  .carousel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .trackLeft,
+  .trackRight {
+    animation: none;
+  }
+}
+

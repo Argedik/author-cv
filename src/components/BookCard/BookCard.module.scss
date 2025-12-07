@@ -1,0 +1,10 @@
+// BookCard Main Module - Single Responsibility: Import all modules
+@import './BookCard.variables';
+@import './BookCard.animations';
+@import './BookCard.base';
+@import './BookCard.image';
+@import './BookCard.content';
+@import './BookCard.bookView';
+@import './BookCard.mobile';
+@import './BookCard.desktop';
+
