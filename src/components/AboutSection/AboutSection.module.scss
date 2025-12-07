@@ -105,10 +105,10 @@ $bg-aged: #baa888;
   position: relative;
   z-index: 1;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 30px auto;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 30px;
   align-items: center;
 
   @media (min-width: 992px) {

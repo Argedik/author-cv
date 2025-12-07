@@ -111,3 +111,39 @@ export interface ContactInfo {
   address?: string;
 }
 
+// News Types
+export interface NewsItem {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  year: number;
+  source: string;
+  sourceImage?: string;
+  url: string;
+  category: 'events' | 'announcements' | 'updates' | 'media';
+}
+
+export interface NewsPageData {
+  title: string;
+  subtitle: string;
+  description: string;
+  emptyState: string;
+  filters: {
+    all: string;
+    events: string;
+    announcements: string;
+    updates: string;
+  };
+}
+
+export interface NewsCardProps {
+  news: NewsItem;
+  index: number;
+}
+
+export interface NewsSectionProps {
+  news: NewsItem[];
+  years: number[];
+}
+
