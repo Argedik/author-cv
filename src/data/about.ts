@@ -37,6 +37,6 @@ export const ABOUT_DATA: AboutData = {
       icon: '🏆',
     },
   ],
-  backgroundImage: '/assets/images/suleyman-karakas-profile-dugun.jpeg',
+  backgroundImage: '/assets/images/suleyman-karakas-profile-dugun-cerceve.jpg',
 };
 

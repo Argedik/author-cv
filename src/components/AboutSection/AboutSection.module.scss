@@ -14,8 +14,12 @@ $bg-aged: #baa888;
 .aboutSection {
   position: relative;
   min-height: 100vh;
-  padding: 65px 20px 80px;
-  padding-top: 65px;
+  padding: 80px 20px 80px;
+  padding-top: 80px;
+
+  @media (min-width: 768px) {
+    padding-top: 100px;
+  }
   
   // Eskitilmiş parşömen arkaplan
   background: 
@@ -117,212 +121,56 @@ $bg-aged: #baa888;
 // Resim kolonu
 .imageColumn {
   flex-shrink: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
   @media (min-width: 992px) {
     position: sticky;
     top: 120px;
+    width: auto;
   }
 }
 
-// Osmanlı tarzı çerçeve - Ahşap dokulu
-.ottomanFrame {
-  position: relative;
-  width: 280px;
-  height: 360px;
-  padding: 20px;
-
-  @media (min-width: 768px) {
-    width: 340px;
-    height: 440px;
-    padding: 25px;
-  }
-
-  // Ahşap arkaplan
-  background: 
-    // Ahşap lifleri
-    repeating-linear-gradient(
-      90deg,
-      rgba(139, 90, 43, 0.1) 0px,
-      rgba(139, 90, 43, 0.1) 1px,
-      transparent 1px,
-      transparent 3px
-    ),
-    // Ahşap rengi - koyu ceviz
-    linear-gradient(
-      135deg,
-      #8b5a2b 0%,
-      #6b4423 25%,
-      #8b5a2b 50%,
-      #6b4423 75%,
-      #8b5a2b 100%
-    );
-
-  // Dış çerçeve - ahşap kenar
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 4px solid transparent;
-    border-image: 
-      linear-gradient(
-        135deg,
-        #a67c52 0%,
-        #8b5a2b 20%,
-        #6b4423 40%,
-        #8b5a2b 60%,
-        #a67c52 80%,
-        #8b5a2b 100%
-      ) 1;
-    box-shadow:
-      0 0 0 2px rgba(60, 30, 10, 0.4),
-      inset 0 0 0 2px rgba(60, 30, 10, 0.2),
-      0 15px 50px rgba(0, 0, 0, 0.4),
-      0 5px 20px rgba(0, 0, 0, 0.3),
-      inset 0 2px 4px rgba(255, 255, 255, 0.1);
-  }
-
-  // Ahşap dokusu overlay
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-      // Ahşap halkaları
-      radial-gradient(ellipse 100px 20px at 20% 30%, rgba(60, 30, 10, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse 80px 15px at 80% 60%, rgba(60, 30, 10, 0.12) 0%, transparent 50%),
-      radial-gradient(ellipse 60px 12px at 50% 80%, rgba(60, 30, 10, 0.1) 0%, transparent 50%),
-      // Ahşap çizgileri
-      repeating-linear-gradient(
-        0deg,
-        transparent 0px,
-        transparent 2px,
-        rgba(60, 30, 10, 0.08) 2px,
-        rgba(60, 30, 10, 0.08) 3px
-      );
-    pointer-events: none;
-    z-index: 1;
-  }
-}
-
-// Köşe süsleri
-.cornerDecor {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  color: $gold-accent;
-  z-index: 2;
-
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  &.topLeft {
-    top: -5px;
-    left: -5px;
-  }
-
-  &.topRight {
-    top: -5px;
-    right: -5px;
-  }
-
-  &.bottomLeft {
-    bottom: -5px;
-    left: -5px;
-  }
-
-  &.bottomRight {
-    bottom: -5px;
-    right: -5px;
-  }
-}
-
-// Kenar süsleri
-.edgeDecor {
-  position: absolute;
-  background: repeating-linear-gradient(
-    90deg,
-    $gold-accent 0px,
-    $gold-accent 8px,
-    transparent 8px,
-    transparent 16px
-  );
-  opacity: 0.4;
-
-  &.topEdge,
-  &.bottomEdge {
-    left: 60px;
-    right: 60px;
-    height: 2px;
-  }
-
-  &.topEdge {
-    top: 3px;
-  }
-
-  &.bottomEdge {
-    bottom: 3px;
-  }
-
-  &.leftEdge,
-  &.rightEdge {
-    top: 60px;
-    bottom: 60px;
-    width: 2px;
-    background: repeating-linear-gradient(
-      0deg,
-      $gold-accent 0px,
-      $gold-accent 8px,
-      transparent 8px,
-      transparent 16px
-    );
-  }
-
-  &.leftEdge {
-    left: 3px;
-  }
-
-  &.rightEdge {
-    right: 3px;
-  }
-}
-
-// İç çerçeve ve resim
-.innerFrame {
+// Resim wrapper - sadece resim, çerçeve yok
+.imageWrapper {
   position: relative;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: linear-gradient(135deg, $bg-parchment 0%, $bg-aged 100%);
-  border: 1px solid rgba($gold-dark, 0.2);
-  z-index: 2;
+  max-width: 280px;
+  height: 360px;
+
+  @media (min-width: 768px) {
+    max-width: 340px;
+    height: 440px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 400px;
+    height: 500px;
+  }
 }
 
 .authorImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: sepia(20%) contrast(1.05) brightness(0.95);
-  transition: filter 0.5s ease;
+  border-radius: 4px;
 }
 
-.imageOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    linear-gradient(to bottom, rgba($text-dark, 0.05) 0%, transparent 30%),
-    linear-gradient(to top, rgba($text-dark, 0.1) 0%, transparent 40%);
-  pointer-events: none;
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($bg-parchment, 0.5);
+  border: 2px dashed rgba($gold-accent, 0.3);
+  border-radius: 4px;
+  color: $text-medium;
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px;
 }
 
 // İçerik kolonu
@@ -586,12 +434,18 @@ $bg-aged: #baa888;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 30px 20px;
-  background: rgba(255, 255, 255, 0.4);
+  padding: 25px 15px;
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
-  border: 1px solid rgba($gold-accent, 0.2);
+  border: 1px solid rgba($gold-accent, 0.25);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 280px;
+
+  @media (min-width: 768px) {
+    padding: 30px 20px;
+    min-height: 300px;
+  }
 
   &:hover {
     transform: translateY(-5px);
@@ -604,7 +458,12 @@ $bg-aged: #baa888;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: 80px;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    height: 100px;
+  }
 }
 
 // Mürekkep Hokkası - Principle Icon içinde
@@ -922,7 +781,7 @@ $bg-aged: #baa888;
 // Principle Item İçerik
 .principleTitle {
   font-family: 'Georgia', serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   color: $text-dark;
   margin: 0 0 12px;
@@ -935,7 +794,7 @@ $bg-aged: #baa888;
 
 .principleText {
   font-family: 'Georgia', serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.7;
   color: $text-medium;
   margin: 0;
