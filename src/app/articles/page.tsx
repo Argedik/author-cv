@@ -14,6 +14,12 @@ import ReadingList from '@/components/ReadingList/ReadingList';
 import ArticleSearch from '@/components/ArticleSearch/ArticleSearch';
 import ArticleCard from '@/components/ArticleCard/ArticleCard';
 
+// SwiperJS
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+
 import styles from './page.module.scss';
 
 // LocalStorage key
@@ -25,6 +31,7 @@ export default function ArticlesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [readingList, setReadingList] = useState<Article[]>([]);
   const [isClient, setIsClient] = useState(false);
+  const [isReadingListModalOpen, setIsReadingListModalOpen] = useState(false);
 
   // Client-side hydration fix
   useEffect(() => {
@@ -146,49 +153,157 @@ export default function ArticlesPage() {
                 </p>
               )}
 
-              {/* Makale Grid */}
-              <div className={styles.articlesGrid}>
-                {filteredArticles.length > 0 ? (
-                  filteredArticles.map((article, index) => (
-                    <ArticleCard 
-                      key={article.id} 
-                      article={article} 
-                      index={index}
-                      onAddToReadingList={handleAddToReadingList}
-                      isInReadingList={readingList.some(a => a.id === article.id)}
-                    />
-                  ))
-                ) : (
-                  <div className={styles.emptyState}>
-                    <span className={styles.emptyIcon}>📄</span>
-                    <p>{ARTICLES_PAGE_DATA.emptyState}</p>
-                    <button 
-                      className={styles.resetButton}
-                      onClick={() => {
-                        setSelectedCategory('all');
-                        setSearchQuery('');
-                      }}
-                    >
-                      Filtreleri Temizle
-                    </button>
-                  </div>
-                )}
-              </div>
+              {/* Swiper Coverflow ile Makaleler */}
+              {filteredArticles.length > 0 ? (
+                <div className={styles.swiperContainer}>
+                  <Swiper
+                    effect="coverflow"
+                    grabCursor={true}
+                    centeredSlides={true}
+                    slidesPerView="auto"
+                    coverflowEffect={{
+                      rotate: 30,
+                      stretch: 0,
+                      depth: 150,
+                      modifier: 1.2,
+                      slideShadows: true,
+                    }}
+                    modules={[EffectCoverflow]}
+                    className={styles.articlesSwiper}
+                    breakpoints={{
+                      320: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                        coverflowEffect: {
+                          rotate: 15,
+                          stretch: 0,
+                          depth: 80,
+                          modifier: 1.1,
+                        },
+                      },
+                      640: {
+                        slidesPerView: 1.2,
+                        spaceBetween: 30,
+                        coverflowEffect: {
+                          rotate: 20,
+                          stretch: 0,
+                          depth: 100,
+                          modifier: 1.15,
+                        },
+                      },
+                      1024: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 40,
+                        coverflowEffect: {
+                          rotate: 25,
+                          stretch: 0,
+                          depth: 120,
+                          modifier: 1.2,
+                        },
+                      },
+                      1280: {
+                        slidesPerView: 2,
+                        spaceBetween: 50,
+                        coverflowEffect: {
+                          rotate: 30,
+                          stretch: 0,
+                          depth: 150,
+                          modifier: 1.2,
+                        },
+                      },
+                    }}
+                  >
+                    {filteredArticles.map((article, index) => (
+                      <SwiperSlide key={article.id} className={styles.swiperSlide}>
+                        <ArticleCard 
+                          article={article} 
+                          index={index}
+                          onAddToReadingList={handleAddToReadingList}
+                          isInReadingList={readingList.some(a => a.id === article.id)}
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              ) : (
+                <div className={styles.emptyState}>
+                  <span className={styles.emptyIcon}>📄</span>
+                  <p>{ARTICLES_PAGE_DATA.emptyState}</p>
+                  <button 
+                    className={styles.resetButton}
+                    onClick={() => {
+                      setSelectedCategory('all');
+                      setSearchQuery('');
+                    }}
+                  >
+                    Filtreleri Temizle
+                  </button>
+                </div>
+              )}
             </div>
 
-            {/* Sağ Taraf - Okuma Listesi */}
-            {/* ÖZELLİK 2: Okuma Listesi */}
-            {/* Bu bölümü kaldırmak için: src/components/ReadingList klasörünü silin ve aşağıdaki satırları kaldırın */}
-            {isClient && (
-              <div className={styles.sidebarSection}>
+          </div>
+        </section>
+
+        {/* Floating Reading List Button */}
+        {isClient && (
+          <button
+            className={styles.floatingReadingListButton}
+            onClick={() => setIsReadingListModalOpen(true)}
+            aria-label="Okuma listesini aç"
+          >
+            <span className={styles.buttonIcon}>📚</span>
+            {readingList.length > 0 && (
+              <span className={styles.badge}>{readingList.length}</span>
+            )}
+          </button>
+        )}
+
+        {/* Reading List Modal */}
+        {isClient && isReadingListModalOpen && (
+          <div 
+            className={styles.readingListModal}
+            onClick={() => setIsReadingListModalOpen(false)}
+          >
+            <div 
+              className={styles.readingListModalContent}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className={styles.readingListModalHeader}>
+                <h3>
+                  <span>📚</span>
+                  Okuma Listem
+                  {readingList.length > 0 && (
+                    <span style={{
+                      fontSize: '0.9rem',
+                      fontWeight: 400,
+                      color: '#8b7355',
+                      marginLeft: '8px'
+                    }}>
+                      ({readingList.length})
+                    </span>
+                  )}
+                </h3>
+                <button
+                  className={styles.closeButton}
+                  onClick={() => setIsReadingListModalOpen(false)}
+                  aria-label="Kapat"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+              </div>
+              <div className={styles.readingListModalBody}>
                 <ReadingList 
                   articles={readingList}
                   onRemove={handleRemoveFromReadingList}
                 />
               </div>
-            )}
+            </div>
           </div>
-        </section>
+        )}
       </main>
       
       {/* Footer */}
@@ -196,4 +311,3 @@ export default function ArticlesPage() {
     </div>
   );
 }
-

@@ -30,15 +30,24 @@ export default function AboutPage() {
             <span className={styles.sectionLabel}>{ABOUT_PAGE_DATA.subtitle}</span>
             <h1 className={styles.name}>{ABOUT_PAGE_DATA.name}</h1>
             
-            {/* Profil Fotoğrafı */}
+            {/* Profil Fotoğrafı - 3D Hover Effect */}
             <div className={styles.profileImageWrapper}>
-              <div className={styles.profileImageFrame}>
+              <div className={styles.profileImageCard}>
+                <div className={styles.profileImageFrame}>
+                  <Image
+                    src={ABOUT_PAGE_DATA.profileImage}
+                    alt={ABOUT_PAGE_DATA.name}
+                    width={200}
+                    height={200}
+                    className={styles.profileImage}
+                  />
+                </div>
                 <Image
-                  src={ABOUT_PAGE_DATA.profileImage}
+                  src="/assets/images/suleyman-karakas-head.png"
                   alt={ABOUT_PAGE_DATA.name}
                   width={200}
                   height={200}
-                  className={styles.profileImage}
+                  className={styles.profileImageCharacter}
                 />
               </div>
             </div>
