@@ -2,6 +2,7 @@
 import { NavItem } from '@/types';
 
 export const NAV_ITEMS: NavItem[] = [
+  { label: 'Ana Sayfa', href: '/', isActive: false },
   { label: 'Kitaplar', href: '/books', isActive: false },
   { label: 'Makaleler', href: '/articles', isActive: false },
   { label: 'Haberler', href: '/news', isActive: false },

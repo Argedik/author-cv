@@ -1,19 +1,23 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { BookCardProps } from '@/types';
 import { BOOK_CARD_TEXT } from '@/data/bookCard';
 import styles from './BookCard.module.scss';
 
-export default function BookCard({ book, index }: BookCardProps) {
+export default function BookCard({ book, index, onReview }: BookCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleReviewClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onReview) {
+      onReview(book);
+    }
+  };
 
   return (
     <article 
       className={`${styles.bookCard} ${isHovered ? styles.hovered : ''}`} 
-      data-index={index}
-      ref={cardRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -46,7 +50,7 @@ export default function BookCard({ book, index }: BookCardProps) {
             <button className={styles.buyButton} onClick={(e) => e.stopPropagation()}>
               {BOOK_CARD_TEXT.buyButton}
             </button>
-            <button className={styles.detailButton} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.detailButton} onClick={handleReviewClick}>
               {BOOK_CARD_TEXT.reviewButton}
             </button>
           </div>

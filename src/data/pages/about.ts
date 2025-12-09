@@ -6,7 +6,7 @@ export const ABOUT_PAGE_DATA: AboutPageData = {
   subtitle: 'HAYAT YOLCULUĞUM',
   name: 'Süleyman Karakaş',
   titles: ['İlim İnsanı', 'Yazar', 'Eğitimci'],
-  profileImage: '/assets/images/suleyman-karakas-profile-dugun-cerceve.jpg',
+  profileImage: '/assets/images/suleyman-karakas-profile.png',
   
   quote: 'İlim öğrenmek, her Müslüman erkek ve kadına farzdır. İlim Çin\'de bile olsa alınız.',
   quoteAuthor: 'Hz. Muhammed (s.a.v.)',
@@ -83,10 +83,12 @@ export const ABOUT_PAGE_DATA: AboutPageData = {
   ],
 
   socialLinks: [
-    { name: 'YouTube', url: 'https://youtube.com', icon: 'youtube' },
-    { name: 'Twitter', url: 'https://twitter.com', icon: 'twitter' },
-    { name: 'Instagram', url: 'https://instagram.com', icon: 'instagram' },
-    { name: 'Facebook', url: 'https://facebook.com', icon: 'facebook' },
+    { name: 'YouTube', url: 'https://youtube.com'},
+    { name: 'X', url: 'https://x.com',},
+    { name: 'LinkedIn', url: 'https://linkedin.com'},
+    { name: 'Facebook', url: 'https://facebook.com'},
+    { name: 'Instagram', url: 'https://instagram.com'},
+    { name: 'Spotify', url: 'https://open.spotify.com/'},
   ],
 
   stats: [

@@ -25,7 +25,7 @@ export default function Header({ scrolled }: HeaderProps) {
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
         <Link href="/" className={styles.logo}>{BRAND_NAME}</Link>
         <nav className={styles.nav}>
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.filter(item => item.href !== '/').map((item) => {
             const isActive = pathname === item.href || (item.href === '/' && pathname === '/');
             const isHashLink = item.href.startsWith('#');
             
