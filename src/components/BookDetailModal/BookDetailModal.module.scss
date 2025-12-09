@@ -1,0 +1,818 @@
+// BookDetailModal Main Styles - %50 Ekran, Sayfa Çevirme Animasyonları
+
+// Değişkenler
+$color-primary: #c4a35a;
+$color-primary-dark: #a8893f;
+$color-text-dark: #3d2e1f;
+$color-text-light: #8b7355;
+$color-bg-light: #faf6f0;
+$color-bg-medium: #f5f0e6;
+$color-bg-dark: #e8dcc8;
+$color-book-spine: #5a4030;
+$color-book-spine-light: #7a6045;
+$font-serif: 'Georgia', 'Times New Roman', serif;
+
+// =====================================
+// MODAL
+// =====================================
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  padding: 20px;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    background: rgba(10, 8, 5, 0.85);
+    backdrop-filter: blur(10px);
+  }
+}
+
+.modalContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 55%;
+  max-width: 750px;
+  min-width: 420px;
+  background: linear-gradient(135deg, rgba(30, 25, 20, 0.95), rgba(20, 15, 10, 0.98));
+  border-radius: 20px;
+  border: 1px solid rgba($color-primary, 0.2);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  padding: 25px;
+  animation: modalSlideIn 0.4s ease-out;
+
+  @media (max-width: 900px) {
+    width: 95%;
+    min-width: unset;
+    padding: 15px;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+  }
+}
+
+// =====================================
+// KAPALI KİTAP
+// =====================================
+
+.closedBookContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px 15px;
+  perspective: 1500px;
+}
+
+.book3D {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(5deg) rotateY(-20deg);
+  transition: transform 0.6s ease;
+  cursor: pointer;
+  
+  --book-width: 140px;
+  --book-height: 210px;
+  --book-thickness: 25px;
+  
+  width: var(--book-width);
+  height: var(--book-height);
+
+  @media (min-width: 768px) {
+    --book-width: 160px;
+    --book-height: 240px;
+  }
+
+  &:hover {
+    transform: rotateX(5deg) rotateY(-25deg) translateY(-5px);
+  }
+
+  &.bookOpening {
+    animation: bookOpenAnim 0.8s ease-out forwards;
+  }
+}
+
+@keyframes bookOpenAnim {
+  0% { transform: rotateX(5deg) rotateY(-20deg); }
+  50% { transform: rotateX(0deg) rotateY(-90deg) scale(1.1); }
+  100% { transform: rotateX(0deg) rotateY(-180deg) scale(0.8); opacity: 0; }
+}
+
+.bookCoverFront {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: $color-bg-dark;
+  border-radius: 0 6px 6px 0;
+  transform-origin: left center;
+  transform: translateZ(calc(var(--book-thickness) / 2));
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 6px 6px 0;
+  }
+}
+
+.bookCoverBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #4a3a2a 0%, #3d2e1f 100%);
+  border-radius: 6px 0 0 6px;
+  transform: translateZ(calc(var(--book-thickness) / -2));
+}
+
+.bookSpine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--book-thickness);
+  height: 100%;
+  background: linear-gradient(90deg, $color-book-spine 0%, $color-book-spine-light 50%, $color-book-spine 100%);
+  transform: rotateY(-90deg) translateX(calc(var(--book-thickness) / -2));
+  transform-origin: right center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spineTitle {
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  font-family: $font-serif;
+  font-size: 0.5rem;
+  color: $color-primary;
+  max-width: calc(var(--book-height) - 20px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bookPages {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  bottom: 2px;
+  width: calc(var(--book-thickness) - 3px);
+  transform: rotateY(90deg) translateX(calc((var(--book-thickness) - 3px) / 2));
+  transform-origin: left center;
+  background: linear-gradient(90deg, #f5f0e6 0%, #e8e0d5 100%);
+  background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 1px, rgba(180, 160, 140, 0.3) 1px, rgba(180, 160, 140, 0.3) 1.5px);
+}
+
+.bookTop, .bookBottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--book-thickness);
+  background: linear-gradient(180deg, #f0e8dc 0%, #e0d5c5 100%);
+}
+
+.bookTop {
+  top: 0;
+  transform: rotateX(90deg) translateY(calc(var(--book-thickness) / -2));
+  transform-origin: bottom center;
+}
+
+.bookBottom {
+  bottom: 0;
+  transform: rotateX(-90deg) translateY(calc(var(--book-thickness) / 2));
+  transform-origin: top center;
+}
+
+.bookSizeLabel {
+  margin-top: 20px;
+  font-family: $font-serif;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  
+  span {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.clickHint {
+  margin-top: 12px;
+  font-family: $font-serif;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+// =====================================
+// AÇIK KİTAP
+// =====================================
+
+.openBookContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+  animation: fadeIn 0.5s ease-out;
+
+  &.shakeBook {
+    animation: shakeBook 0.5s ease;
+  }
+}
+
+@keyframes shakeBook {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-8px) rotate(-1deg); }
+  40% { transform: translateX(8px) rotate(1deg); }
+  60% { transform: translateX(-6px) rotate(-0.5deg); }
+  80% { transform: translateX(6px) rotate(0.5deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.backToBookButton {
+  align-self: flex-start;
+  padding: 6px 14px;
+  font-family: $font-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+}
+
+// Sayfa navigasyonu
+.pageNavigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 550px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+
+  @media (max-width: 767px) {
+    max-width: 320px;
+    margin-bottom: 15px;
+  }
+}
+
+.navButton {
+  padding: 6px 14px;
+  font-family: $font-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover:not(.disabled):not(.locked) {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  &.locked {
+    background: rgba($color-primary, 0.2);
+    border-color: rgba($color-primary, 0.3);
+    color: $color-primary;
+  }
+}
+
+.pageInfo {
+  font-family: $font-serif;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+// Açık kitap
+.openBook {
+  display: flex;
+  width: 100%;
+  max-width: 550px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  overflow: visible;
+  perspective: 2000px;
+
+  // Mobil: tek sayfa görünümü
+  &.mobileBook {
+    max-width: 320px;
+    justify-content: center;
+  }
+}
+
+// Mobil tek sayfa
+.singlePage {
+  width: 100%;
+  background: linear-gradient(135deg, $color-bg-light 0%, $color-bg-medium 100%);
+  min-height: 380px;
+  border-radius: 6px;
+  position: relative;
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  &.turningLeft {
+    animation: mobilePageTurnLeft 0.5s ease;
+  }
+
+  &.turningRight {
+    animation: mobilePageTurnRight 0.5s ease;
+  }
+
+  &.lockedPage {
+    background: linear-gradient(135deg, rgba(100, 80, 60, 0.15) 0%, rgba(139, 115, 85, 0.2) 100%);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        rgba(139, 115, 85, 0.05) 8px,
+        rgba(139, 115, 85, 0.05) 16px
+      );
+      pointer-events: none;
+      border-radius: 6px;
+    }
+  }
+}
+
+@keyframes mobilePageTurnLeft {
+  0% { transform: translateX(0) rotateY(0deg); opacity: 1; }
+  50% { transform: translateX(-30px) rotateY(-15deg); opacity: 0.7; }
+  100% { transform: translateX(0) rotateY(0deg); opacity: 1; }
+}
+
+@keyframes mobilePageTurnRight {
+  0% { transform: translateX(0) rotateY(0deg); opacity: 1; }
+  50% { transform: translateX(30px) rotateY(15deg); opacity: 0.7; }
+  100% { transform: translateX(0) rotateY(0deg); opacity: 1; }
+}
+
+.leftPage, .rightPage {
+  flex: 1;
+  background: linear-gradient(135deg, $color-bg-light 0%, $color-bg-medium 100%);
+  min-height: 320px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  transform-style: preserve-3d;
+
+  @media (max-width: 767px) {
+    display: none; // Mobilde gizle
+  }
+
+  &:hover {
+    .pageCornerHint {
+      opacity: 1;
+    }
+  }
+}
+
+.leftPage {
+  border-radius: 6px 0 0 6px;
+  box-shadow: inset -3px 0 10px rgba(0, 0, 0, 0.06);
+  transform-origin: right center;
+
+  &.firstPage {
+    cursor: default;
+  }
+
+  &.turningRight {
+    animation: turnPageRight 0.6s ease forwards;
+  }
+}
+
+.rightPage {
+  border-radius: 0 6px 6px 0;
+  box-shadow: inset 3px 0 10px rgba(0, 0, 0, 0.06);
+  transform-origin: left center;
+
+  &.turningLeft {
+    animation: turnPageLeft 0.6s ease forwards;
+  }
+
+  &.lockedPage {
+    background: linear-gradient(135deg, rgba(100, 80, 60, 0.15) 0%, rgba(139, 115, 85, 0.2) 100%);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        rgba(139, 115, 85, 0.05) 8px,
+        rgba(139, 115, 85, 0.05) 16px
+      );
+      pointer-events: none;
+    }
+  }
+}
+
+// Sayfa çevirme animasyonları
+@keyframes turnPageLeft {
+  0% {
+    transform: rotateY(0deg);
+    z-index: 1;
+  }
+  50% {
+    transform: rotateY(-90deg);
+    z-index: 100;
+    box-shadow: -20px 5px 30px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: rotateY(-180deg);
+    z-index: 1;
+  }
+}
+
+@keyframes turnPageRight {
+  0% {
+    transform: rotateY(0deg);
+    z-index: 1;
+  }
+  50% {
+    transform: rotateY(90deg);
+    z-index: 100;
+    box-shadow: 20px 5px 30px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: rotateY(180deg);
+    z-index: 1;
+  }
+}
+
+.pageCornerHint {
+  position: absolute;
+  bottom: 8px;
+  font-family: $font-serif;
+  font-size: 0.6rem;
+  color: $color-text-light;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+
+  .leftPage & {
+    left: 8px;
+  }
+
+  .rightPage & {
+    right: 8px;
+  }
+}
+
+.bookBinding {
+  width: 10px;
+  background: linear-gradient(90deg, 
+    rgba(100, 80, 60, 0.4) 0%,
+    rgba(80, 60, 40, 0.6) 50%,
+    rgba(100, 80, 60, 0.4) 100%
+  );
+  box-shadow: 
+    inset 2px 0 4px rgba(0, 0, 0, 0.3),
+    inset -2px 0 4px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+
+  @media (max-width: 767px) {
+    display: none; // Mobilde gizle
+  }
+}
+
+.pageContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba($color-primary, 0.2);
+  margin-bottom: 12px;
+}
+
+.pageNumber {
+  font-family: $font-serif;
+  font-size: 0.65rem;
+  color: $color-text-light;
+}
+
+.pageTitle {
+  font-family: $font-serif;
+  font-size: 0.55rem;
+  color: $color-text-light;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pageText {
+  flex: 1;
+  font-family: $font-serif;
+  font-size: 0.8rem;
+  color: $color-text-dark;
+  line-height: 1.65;
+  overflow-y: auto;
+
+  p {
+    margin: 0 0 8px;
+    text-align: justify;
+
+    strong {
+      color: $color-book-spine;
+    }
+  }
+
+  @media (max-width: 600px) {
+    font-size: 0.7rem;
+  }
+}
+
+.pageFooter {
+  padding-top: 8px;
+  border-top: 1px solid rgba($color-primary, 0.2);
+  text-align: center;
+  font-family: $font-serif;
+  font-size: 0.6rem;
+  color: $color-text-light;
+}
+
+// Kilitli sayfa içeriği
+.lockedPageContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.lockIcon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  animation: lockBounce 2s ease infinite;
+}
+
+@keyframes lockBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.lockText {
+  font-family: $font-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $color-text-dark;
+  margin: 0 0 5px;
+}
+
+.lockSubtext {
+  font-family: $font-serif;
+  font-size: 0.75rem;
+  color: $color-text-light;
+  margin: 0;
+}
+
+.previewInfo {
+  margin-top: 12px;
+  font-family: $font-serif;
+  font-size: 0.75rem;
+  color: $color-primary;
+  padding: 6px 14px;
+  background: rgba($color-primary, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba($color-primary, 0.2);
+}
+
+// =====================================
+// ALT BİLGİ PANELİ
+// =====================================
+
+.bookInfoPanel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 12px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+.bookInfoLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bookInfoTitle {
+  font-family: $font-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+  }
+}
+
+.bookInfoMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: $font-serif;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+
+  @media (max-width: 600px) {
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.65rem;
+  }
+}
+
+.bookInfoRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+.bookDimensions {
+  font-family: $font-serif;
+  font-size: 0.7rem;
+  color: $color-primary;
+  padding: 5px 10px;
+  background: rgba($color-primary, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba($color-primary, 0.2);
+}
+
+.buyButtonFloat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-family: $font-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-dark 100%);
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba($color-primary, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($color-primary, 0.4);
+  }
+
+  // Kilitli sayfa tıklandığında animasyon
+  &.buyAnimating {
+    animation: buyPulse 0.5s ease 2, glowEffect 2s ease forwards;
+  }
+}
+
+@keyframes buyPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.9); }
+}
+
+@keyframes glowEffect {
+  0% {
+    box-shadow: 0 4px 15px rgba($color-primary, 0.3);
+  }
+  25% {
+    box-shadow: 
+      0 0 20px rgba($color-primary, 0.8),
+      0 0 40px rgba($color-primary, 0.6),
+      0 0 60px rgba($color-primary, 0.4),
+      0 0 80px rgba($color-primary, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba($color-primary, 1),
+      0 0 60px rgba($color-primary, 0.8),
+      0 0 90px rgba($color-primary, 0.6),
+      0 0 120px rgba($color-primary, 0.4);
+  }
+  75% {
+    box-shadow: 
+      0 0 20px rgba($color-primary, 0.8),
+      0 0 40px rgba($color-primary, 0.6),
+      0 0 60px rgba($color-primary, 0.4),
+      0 0 80px rgba($color-primary, 0.2);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba($color-primary, 0.3);
+  }
+}
+
+// =====================================
+// ANİMASYONLAR
+// =====================================
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

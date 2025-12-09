@@ -10,38 +10,40 @@ export const FOOTER_DATA: FooterData = {
     {
       title: 'Eserler',
       links: [
-        { label: 'Kitaplar', href: '#books' },
-        { label: 'Makaleler', href: '#articles' },
-        { label: 'Araştırmalar', href: '#research' },
+        { label: 'Kitaplar', href: '/books' },
+        { label: 'Makaleler', href: '/articles' },
+        { label: 'Araştırmalar', href: '/research' },
       ],
     },
     {
       title: 'Hakkında',
       links: [
-        { label: 'Biyografi', href: '#about' },
-        { label: 'Akademik Çalışmalar', href: '#academic' },
-        { label: 'Ödüller', href: '#awards' },
+        { label: 'Biyografi', href: '/about' },
+        { label: 'Akademik Çalışmalar', href: '/academic' },
+        { label: 'Ödüller', href: '/awards' },
       ],
     },
     {
       title: 'İletişim',
       links: [
-        { label: 'Bize Ulaşın', href: '#contact' },
-        { label: 'Yayınevleri', href: '#publishers' },
-        { label: 'Basın', href: '#press' },
+        { label: 'Bize Ulaşın', href: '/contact' },
+        { label: 'Yayınevleri', href: '/publishers' },
+        { label: 'Basın', href: '/press' },
       ],
     },
   ],
   social: [
-    { name: 'YouTube', url: '#', icon: '📺' },
-    { name: 'Twitter', url: '#', icon: '🐦' },
-    { name: 'Instagram', url: '#', icon: '📷' },
-    { name: 'Facebook', url: '#', icon: '📘' },
+    { name: 'YouTube', url: 'https://www.youtube.com/',},
+    { name: 'X', url: 'https://x.com/'},
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/',},
+    { name: 'Facebook', url: 'https://www.facebook.com/'},
+    { name: 'Instagram', url: 'https://www.instagram.com/'},
+    { name: 'Spotify', url: 'https://www.spotify.com/'},
   ],
   contact: {
-    email: 'iletisim@suleymankarakas.com',
-    address: 'İstanbul, Türkiye',
+    email: 'karakassuleyman@gmail.com',
+    address: 'Eyüpsultan, İstanbul, Türkiye',
   },
-  copyright: '© 2024 Süleyman Karakaş. Tüm hakları saklıdır.',
+  copyright: '© 2026 Süleyman Karakaş. Tüm hakları saklıdır.',
 };
 

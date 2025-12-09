@@ -3,6 +3,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { FooterProps } from '@/types';
 import LegalPopup from '@/components/LegalPopup/LegalPopup';
+import { 
+  FaYoutube, 
+  FaXTwitter, 
+  FaLinkedin, 
+  FaFacebook, 
+  FaInstagram, 
+  FaSpotify 
+} from 'react-icons/fa6';
 import styles from './Footer.module.scss';
 
 export default function Footer({ data }: FooterProps) {
@@ -53,17 +61,33 @@ export default function Footer({ data }: FooterProps) {
             
             {/* Sosyal medya */}
             <div className={styles.socialLinks}>
-              {data.social.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.url}
-                  className={styles.socialLink}
-                  aria-label={social.name}
-                  title={social.name}
-                >
-                  <span className={styles.socialIcon}>{social.icon}</span>
-                </a>
-              ))}
+              {data.social.map((social, index) => {
+                // Icon seçimi
+                const getIcon = () => {
+                  const iconName = social.name.toLowerCase();
+                  if (iconName.includes('youtube')) return <FaYoutube />;
+                  if (iconName.includes('x') || iconName.includes('twitter')) return <FaXTwitter />;
+                  if (iconName.includes('linkedin')) return <FaLinkedin />;
+                  if (iconName.includes('facebook')) return <FaFacebook />;
+                  if (iconName.includes('instagram')) return <FaInstagram />;
+                  if (iconName.includes('spotify')) return <FaSpotify />;
+                  return null;
+                };
+
+                return (
+                  <a
+                    key={index}
+                    href={social.url}
+                    className={styles.socialLink}
+                    aria-label={social.name}
+                    title={social.name}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className={styles.socialIcon}>{getIcon()}</span>
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -107,7 +131,7 @@ export default function Footer({ data }: FooterProps) {
             {/* Dekoratif imza */}
             <div className={styles.signature}>
               <span className={styles.quill}>✒</span>
-              <span className={styles.year}>MMXXIV</span>
+              <span className={styles.year}>MMXXVI</span>
             </div>
           </div>
         </div>

@@ -5,6 +5,13 @@ export interface Book {
   title: string;
   description: string;
   image: string;
+  author?: string;
+  publishDate?: string;
+  pageCount?: number;
+  price?: string;
+  publisher?: string;
+  isbn?: string;
+  pages?: string[]; // Sayfa resimleri veya placeholder'lar
 }
 
 export interface NavItem {
@@ -21,10 +28,12 @@ export interface HeroSectionProps {
 export interface BookCardProps {
   book: Book;
   index: number;
+  onReview?: (book: Book) => void;
 }
 
 export interface BooksSectionProps {
   books: Book[];
+  onReview?: (book: Book) => void;
 }
 
 export interface HeaderProps {
@@ -102,7 +111,6 @@ export interface FooterLink {
 export interface SocialLink {
   name: string;
   url: string;
-  icon: string;
 }
 
 export interface ContactInfo {

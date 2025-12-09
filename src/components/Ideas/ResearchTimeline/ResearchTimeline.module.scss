@@ -1,0 +1,176 @@
+// Research Timeline Styles
+
+.timeline {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, transparent 0%, rgba(196, 163, 90, 0.05) 50%, transparent 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.label {
+  display: inline-block;
+  font-family: 'Georgia', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c4a35a;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-family: 'Georgia', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #3d2e1f;
+  margin: 0 0 20px;
+  letter-spacing: 1px;
+
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.underline {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c4a35a, transparent);
+  margin: 0 auto;
+}
+
+.container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent, #c4a35a 10%, #c4a35a 90%, transparent);
+  transform: translateX(-50%);
+
+  @media (max-width: 767px) {
+    left: 20px;
+  }
+}
+
+.item {
+  position: relative;
+  width: 50%;
+  padding: 20px 40px;
+  box-sizing: border-box;
+
+  &.left {
+    left: 0;
+    padding-right: 50px;
+    text-align: right;
+
+    .content {
+      align-items: flex-end;
+    }
+
+    .dot {
+      right: -8px;
+    }
+  }
+
+  &.right {
+    left: 50%;
+    padding-left: 50px;
+    text-align: left;
+
+    .content {
+      align-items: flex-start;
+    }
+
+    .dot {
+      left: -8px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+    left: 0 !important;
+    padding-left: 60px !important;
+    padding-right: 20px !important;
+    text-align: left !important;
+
+    .content {
+      align-items: flex-start !important;
+    }
+
+    .dot {
+      left: 12px !important;
+      right: auto !important;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  padding: 25px;
+  border-radius: 12px;
+  border: 2px solid rgba(196, 163, 90, 0.2);
+  box-shadow: 0 4px 20px rgba(139, 115, 85, 0.08);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(139, 115, 85, 0.12);
+    border-color: rgba(196, 163, 90, 0.4);
+  }
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.year {
+  font-family: 'Georgia', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #c4a35a;
+  letter-spacing: 1px;
+}
+
+.itemTitle {
+  font-family: 'Georgia', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin: 0;
+}
+
+.description {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 0.95rem;
+  color: #6b5b4f;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #c4a35a;
+  border: 3px solid #faf6f0;
+  box-shadow: 0 0 0 3px rgba(196, 163, 90, 0.3);
+  z-index: 1;
+}
+

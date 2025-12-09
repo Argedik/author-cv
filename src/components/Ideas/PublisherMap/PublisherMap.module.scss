@@ -1,0 +1,241 @@
+// Publisher Map Styles
+
+.section {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, transparent 0%, rgba(196, 163, 90, 0.05) 50%, transparent 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.label {
+  display: inline-block;
+  font-family: 'Georgia', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c4a35a;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-family: 'Georgia', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #3d2e1f;
+  margin: 0 0 20px;
+
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.underline {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c4a35a, transparent);
+  margin: 0 auto;
+}
+
+.mapContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+
+.mapVisual {
+  position: relative;
+}
+
+.mapOutline {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.9) 0%, rgba(248, 243, 230, 0.85) 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(196, 163, 90, 0.2);
+  overflow: hidden;
+
+  &::before {
+    content: '🗺️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    opacity: 0.1;
+  }
+}
+
+.cityMarker {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+
+    .markerLabel, .markerCount {
+      opacity: 1;
+    }
+  }
+}
+
+.markerDot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c4a35a 0%, #a8893f 100%);
+  box-shadow: 0 4px 15px rgba(196, 163, 90, 0.5);
+  z-index: 2;
+}
+
+.markerPulse {
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #c4a35a;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.markerLabel {
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin-top: 8px;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.markerCount {
+  font-size: 0.75rem;
+  color: #c4a35a;
+  transition: opacity 0.3s ease;
+}
+
+.publishersList {
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid rgba(196, 163, 90, 0.2);
+}
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(196, 163, 90, 0.15);
+
+  h3 {
+    font-family: 'Georgia', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3d2e1f;
+    margin: 0;
+  }
+}
+
+.totalBooks {
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #c4a35a 0%, #a8893f 100%);
+  padding: 6px 15px;
+  border-radius: 15px;
+}
+
+.publisherItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  animation: fadeInRight 0.5s ease forwards;
+  opacity: 0;
+
+  &:hover {
+    background: rgba(196, 163, 90, 0.1);
+    transform: translateX(5px);
+  }
+
+  & + & {
+    border-top: 1px solid rgba(196, 163, 90, 0.1);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.publisherLogo {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.publisherInfo {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.publisherName {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3d2e1f;
+}
+
+.publisherCity {
+  font-size: 0.85rem;
+  color: #8b7355;
+}
+
+.publisherBooks {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #c4a35a;
+  background: rgba(196, 163, 90, 0.1);
+  padding: 4px 12px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
