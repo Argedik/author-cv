@@ -2,22 +2,12 @@
 // ÖZELLİK 2: Bu dosyayı silmek için klasörü tamamen silebilirsiniz
 
 .readingList {
-  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
-  border-radius: 16px;
-  border: 2px solid rgba(196, 163, 90, 0.2);
-  box-shadow: 0 4px 20px rgba(139, 115, 85, 0.08);
+  background: transparent;
   overflow: hidden;
-  position: sticky;
-  top: 120px;
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px;
-  background: linear-gradient(135deg, rgba(196, 163, 90, 0.12) 0%, rgba(180, 150, 110, 0.08) 100%);
-  border-bottom: 2px solid rgba(196, 163, 90, 0.15);
+  display: none;
 }
 
 .headerIcon {
@@ -45,7 +35,7 @@
 
 // Boş Durum
 .emptyState {
-  padding: 30px 20px;
+  padding: 40px 20px;
   text-align: center;
 }
 
@@ -74,7 +64,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 400px;
+  max-height: calc(80vh - 200px);
   overflow-y: auto;
 
   // Özel scrollbar

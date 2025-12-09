@@ -256,12 +256,11 @@ $bg-aged: #baa888;
     color: $text-medium;
     margin: 0 0 20px;
     text-align: justify;
-    text-indent: 2em;
 
     &:first-of-type::first-letter {
       font-size: 3.5em;
       float: left;
-      line-height: 0.8;
+      line-height: 1.2;
       padding-right: 10px;
       padding-top: 5px;
       color: $gold-dark;

@@ -93,27 +93,89 @@
   }
 }
 
-// Profil Fotoğrafı
+// Profil Fotoğrafı - 3D Hover Effect
 .profileImageWrapper {
   margin: 0 auto 25px;
   display: flex;
   justify-content: center;
+  perspective: 2500px;
+}
+
+.profileImageCard {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 2500px;
+
+  @media (min-width: 768px) {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 .profileImageFrame {
-  width: 180px;
-  height: 180px;
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s;
+  position: absolute;
+  z-index: 1;
   border-radius: 50%;
   padding: 5px;
   background: linear-gradient(135deg, #c4a35a 0%, #a8893f 50%, #c4a35a 100%);
   box-shadow: 
     0 8px 30px rgba(196, 163, 90, 0.3),
     0 4px 15px rgba(139, 115, 85, 0.2);
+  overflow: hidden;
+}
 
-  @media (min-width: 768px) {
-    width: 200px;
-    height: 200px;
-  }
+.profileImageCard:hover .profileImageFrame {
+  transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
+  box-shadow: 
+    2px 35px 32px -8px rgba(0, 0, 0, 0.75),
+    0 8px 30px rgba(196, 163, 90, 0.3);
+}
+
+.profileImageFrame::before,
+.profileImageFrame::after {
+  content: "";
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.profileImageFrame::before {
+  background-image: linear-gradient(
+    to top,
+    transparent 46%,
+    rgba(61, 46, 31, 0.3) 68%,
+    rgba(61, 46, 31, 0.5) 97%
+  );
+  z-index: 2;
+}
+
+.profileImageFrame::after {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 46%,
+    rgba(61, 46, 31, 0.3) 68%,
+    rgba(61, 46, 31, 0.5) 97%
+  );
+  opacity: 0;
+  z-index: 2;
+}
+
+.profileImageCard:hover .profileImageFrame::before,
+.profileImageCard:hover .profileImageFrame::after {
+  opacity: 1;
 }
 
 .profileImage {
@@ -122,6 +184,26 @@
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid #faf6f0;
+  position: relative;
+  z-index: 1;
+}
+
+.profileImageCharacter {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+  position: absolute;
+  z-index: 3;
+  border-radius: 50%;
+  object-fit: cover;
+  transform: translate3d(0%, 0%, 0);
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+.profileImageCard:hover .profileImageCharacter {
+  opacity: 1;
+  transform: translate3d(0%, -10%, 100px);
 }
 
 // Unvanlar

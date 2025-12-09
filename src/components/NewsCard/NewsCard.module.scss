@@ -47,7 +47,8 @@
   }
 
   @media (min-width: 768px) {
-    flex-direction: row;
+    flex-direction: column;
+    min-height: 400px;
   }
 }
 
@@ -67,11 +68,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 20px;
+  padding: 25px 20px;
   background: linear-gradient(135deg, rgba(245, 238, 225, 0.9) 0%, rgba(235, 225, 205, 0.95) 100%);
   border-bottom: 2px solid rgba(196, 163, 90, 0.2);
   position: relative;
   z-index: 1;
+  min-height: 100px;
 
   // Osmanlı stili iç çerçeve
   &::before {
@@ -87,16 +89,8 @@
   }
 
   @media (min-width: 768px) {
-    min-width: 200px;
-    max-width: 200px;
-    border-bottom: none;
-    border-right: 2px solid rgba(196, 163, 90, 0.2);
-    padding: 40px 25px;
-  }
-
-  @media (min-width: 1024px) {
-    min-width: 240px;
-    max-width: 240px;
+    min-height: 120px;
+    padding: 30px 20px;
   }
 }
 
@@ -127,7 +121,7 @@
 // İçerik Alanı
 .content {
   flex: 1;
-  padding: 25px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -135,28 +129,37 @@
   z-index: 1;
 
   @media (min-width: 768px) {
-    padding: 30px;
+    padding: 25px;
     gap: 15px;
   }
+}
+
+// Footer
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  margin-top: auto;
+  border-top: 1px solid rgba(196, 163, 90, 0.15);
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 // Tarih
 .date {
   font-family: 'Georgia', serif;
-  font-size: 0.95rem;
-  color: #c4a35a;
-  font-weight: 600;
+  font-size: 0.85rem;
+  color: #8b7355;
+  font-weight: 500;
   letter-spacing: 0.5px;
-
-  // Osmanlı stili tarih süslemesi
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 
   &::before {
-    content: '❧';
-    font-size: 0.8rem;
-    color: #c4a35a;
+    content: '📅';
+    font-size: 0.9rem;
   }
 }
 
@@ -195,11 +198,10 @@
   align-items: center;
   gap: 8px;
   font-family: 'Georgia', serif;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #c4a35a;
   text-decoration: none;
-  margin-top: 10px;
   transition: all 0.3s ease;
   width: fit-content;
 
@@ -210,21 +212,6 @@
     .arrow {
       transform: translateX(4px);
     }
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: #c4a35a;
-    transition: width 0.3s ease;
-  }
-
-  &:hover::after {
-    width: 100%;
   }
 }
 
