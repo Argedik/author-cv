@@ -29,11 +29,24 @@ const calculateBookDimensions = (pageCount: number) => {
 export default function BookDetailModal({ book, isOpen, onClose }: BookDetailModalProps) {
   const [isBookOpened, setIsBookOpened] = useState(false);
   const [isOpening, setIsOpening] = useState(false);
-  const [currentSpread, setCurrentSpread] = useState(0); // 0 = sayfa 1-2, 1 = sayfa 3-4, vs.
+  const [currentSpread, setCurrentSpread] = useState(0); // Desktop: 0 = sayfa 1-2, 1 = sayfa 3-4
+  const [currentMobilePage, setCurrentMobilePage] = useState(1); // Mobile: tek sayfa
   const [isPageTurning, setIsPageTurning] = useState(false);
   const [turnDirection, setTurnDirection] = useState<'left' | 'right' | null>(null);
   const [showLockedAnimation, setShowLockedAnimation] = useState(false);
   const [showBuyAnimation, setShowBuyAnimation] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Mobil kontrolü
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const dimensions = useMemo(() => {
     return calculateBookDimensions(book?.pageCount || 200);
@@ -42,19 +55,18 @@ export default function BookDetailModal({ book, isOpen, onClose }: BookDetailMod
   // Ücretsiz sayfa sayısı (%5)
   const freePageCount = useMemo(() => {
     const count = book?.pageCount || 200;
-    return Math.max(4, Math.ceil(count * 0.05)); // Minimum 4 sayfa
+    return Math.max(4, Math.ceil(count * 0.05));
   }, [book?.pageCount]);
 
-  // Toplam spread sayısı (her spread 2 sayfa)
-  const totalFreeSpread = Math.ceil(freePageCount / 2);
-
-  // Sol ve sağ sayfa numaraları
+  // Desktop için sayfa numaraları
   const leftPageNum = currentSpread * 2 + 1;
   const rightPageNum = currentSpread * 2 + 2;
 
-  // Sağ sayfa kilitli mi?
+  // Kilitli kontrolleri
   const isRightPageLocked = rightPageNum > freePageCount;
   const isNextSpreadLocked = (currentSpread + 1) * 2 + 1 > freePageCount;
+  const isMobilePageLocked = currentMobilePage > freePageCount;
+  const isNextMobilePageLocked = currentMobilePage + 1 > freePageCount;
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -63,6 +75,7 @@ export default function BookDetailModal({ book, isOpen, onClose }: BookDetailMod
           setIsBookOpened(false);
           setIsOpening(false);
           setCurrentSpread(0);
+          setCurrentMobilePage(1);
         } else {
           onClose();
         }
@@ -85,6 +98,7 @@ export default function BookDetailModal({ book, isOpen, onClose }: BookDetailMod
       setIsBookOpened(false);
       setIsOpening(false);
       setCurrentSpread(0);
+      setCurrentMobilePage(1);
       setIsPageTurning(false);
       setTurnDirection(null);
     }
@@ -104,48 +118,78 @@ export default function BookDetailModal({ book, isOpen, onClose }: BookDetailMod
   const handleCloseBook = () => {
     setIsBookOpened(false);
     setCurrentSpread(0);
+    setCurrentMobilePage(1);
   };
 
-  // Sol sayfaya tıklama - önceki spread'e git (sağa doğru çevir)
-  const handleLeftPageClick = useCallback(() => {
-    if (isPageTurning || currentSpread === 0) return;
-    
-    setIsPageTurning(true);
-    setTurnDirection('right');
-    
-    setTimeout(() => {
-      setCurrentSpread(prev => prev - 1);
-      setIsPageTurning(false);
-      setTurnDirection(null);
-    }, 600);
-  }, [isPageTurning, currentSpread]);
-
-  // Sağ sayfaya tıklama - sonraki spread'e git (sola doğru çevir)
-  const handleRightPageClick = useCallback(() => {
+  // Önceki sayfa/spread'e git
+  const handlePrevPage = useCallback(() => {
     if (isPageTurning) return;
     
-    // Kilitli sayfaya tıklandıysa
-    if (isRightPageLocked || isNextSpreadLocked) {
-      triggerLockedAnimation();
-      return;
+    if (isMobile) {
+      if (currentMobilePage === 1) return;
+      
+      setIsPageTurning(true);
+      setTurnDirection('right');
+      
+      setTimeout(() => {
+        setCurrentMobilePage(prev => prev - 1);
+        setIsPageTurning(false);
+        setTurnDirection(null);
+      }, 500);
+    } else {
+      if (currentSpread === 0) return;
+      
+      setIsPageTurning(true);
+      setTurnDirection('right');
+      
+      setTimeout(() => {
+        setCurrentSpread(prev => prev - 1);
+        setIsPageTurning(false);
+        setTurnDirection(null);
+      }, 600);
     }
+  }, [isPageTurning, isMobile, currentMobilePage, currentSpread]);
+
+  // Sonraki sayfa/spread'e git
+  const handleNextPage = useCallback(() => {
+    if (isPageTurning) return;
     
-    setIsPageTurning(true);
-    setTurnDirection('left');
-    
-    setTimeout(() => {
-      setCurrentSpread(prev => prev + 1);
-      setIsPageTurning(false);
-      setTurnDirection(null);
-    }, 600);
-  }, [isPageTurning, isRightPageLocked, isNextSpreadLocked]);
+    if (isMobile) {
+      if (isNextMobilePageLocked) {
+        triggerLockedAnimation();
+        return;
+      }
+      
+      setIsPageTurning(true);
+      setTurnDirection('left');
+      
+      setTimeout(() => {
+        setCurrentMobilePage(prev => prev + 1);
+        setIsPageTurning(false);
+        setTurnDirection(null);
+      }, 500);
+    } else {
+      if (isRightPageLocked || isNextSpreadLocked) {
+        triggerLockedAnimation();
+        return;
+      }
+      
+      setIsPageTurning(true);
+      setTurnDirection('left');
+      
+      setTimeout(() => {
+        setCurrentSpread(prev => prev + 1);
+        setIsPageTurning(false);
+        setTurnDirection(null);
+      }, 600);
+    }
+  }, [isPageTurning, isMobile, isNextMobilePageLocked, isRightPageLocked, isNextSpreadLocked]);
 
   // Kilitli sayfa animasyonu
   const triggerLockedAnimation = () => {
     setShowLockedAnimation(true);
     setShowBuyAnimation(true);
     
-    // 2 saniye sonra animasyonları kapat
     setTimeout(() => {
       setShowLockedAnimation(false);
       setShowBuyAnimation(false);
@@ -168,7 +212,6 @@ export default function BookDetailModal({ book, isOpen, onClose }: BookDetailMod
       );
     }
 
-    // Dinamik sayfa içeriği
     if (pageNum === 1) {
       return (
         <>
@@ -213,6 +256,11 @@ export default function BookDetailModal({ book, isOpen, onClose }: BookDetailMod
       );
     }
   };
+
+  // Mevcut sayfa numarası (mobil için)
+  const displayPageNum = isMobile ? currentMobilePage : leftPageNum;
+  const canGoPrev = isMobile ? currentMobilePage > 1 : currentSpread > 0;
+  const isNextLocked = isMobile ? isNextMobilePageLocked : isNextSpreadLocked;
 
   return (
     <div className={`${styles.modalOverlay} ${isOpen ? styles.open : ''}`} onClick={onClose}>
@@ -267,67 +315,92 @@ export default function BookDetailModal({ book, isOpen, onClose }: BookDetailMod
             {/* Sayfa navigasyonu */}
             <div className={styles.pageNavigation}>
               <button 
-                className={`${styles.navButton} ${currentSpread === 0 ? styles.disabled : ''}`}
-                onClick={handleLeftPageClick}
-                disabled={currentSpread === 0}
+                className={`${styles.navButton} ${!canGoPrev ? styles.disabled : ''}`}
+                onClick={handlePrevPage}
+                disabled={!canGoPrev}
               >
                 ‹ Önceki
               </button>
               <span className={styles.pageInfo}>
-                Sayfa {leftPageNum}-{rightPageNum} / {freePageCount} ücretsiz
+                {isMobile 
+                  ? `Sayfa ${currentMobilePage} / ${freePageCount} ücretsiz`
+                  : `Sayfa ${leftPageNum}-${rightPageNum} / ${freePageCount} ücretsiz`
+                }
               </span>
               <button 
-                className={`${styles.navButton} ${isNextSpreadLocked ? styles.locked : ''}`}
-                onClick={handleRightPageClick}
+                className={`${styles.navButton} ${isNextLocked ? styles.locked : ''}`}
+                onClick={handleNextPage}
               >
-                {isNextSpreadLocked ? '🔒' : 'Sonraki ›'}
+                {isNextLocked ? '🔒' : 'Sonraki ›'}
               </button>
             </div>
 
-            {/* Açık kitap */}
-            <div className={styles.openBook}>
-              {/* Sol Sayfa */}
-              <div 
-                className={`${styles.leftPage} ${turnDirection === 'right' ? styles.turningRight : ''} ${currentSpread === 0 ? styles.firstPage : ''}`}
-                onClick={handleLeftPageClick}
-              >
-                <div className={styles.pageContent}>
-                  <div className={styles.pageHeader}>
-                    <span className={styles.pageNumber}>Sayfa {leftPageNum}</span>
-                    <span className={styles.pageTitle}>{book.title}</span>
-                  </div>
-                  <div className={styles.pageText}>
-                    {getPageContent(leftPageNum)}
-                  </div>
-                  <div className={styles.pageFooter}>
-                    {leftPageNum} / {book.pageCount}
-                  </div>
-                </div>
-                {currentSpread > 0 && <div className={styles.pageCornerHint}>◂ tıkla</div>}
-              </div>
-
-              {/* Kitap Cildi */}
-              <div className={styles.bookBinding}></div>
-
-              {/* Sağ Sayfa */}
-              <div 
-                className={`${styles.rightPage} ${turnDirection === 'left' ? styles.turningLeft : ''} ${isRightPageLocked ? styles.lockedPage : ''}`}
-                onClick={handleRightPageClick}
-              >
-                <div className={styles.pageContent}>
-                  <div className={styles.pageHeader}>
-                    <span className={styles.pageNumber}>Sayfa {rightPageNum}</span>
-                    <span className={styles.pageTitle}>{book.title}</span>
-                  </div>
-                  <div className={styles.pageText}>
-                    {getPageContent(rightPageNum)}
-                  </div>
-                  <div className={styles.pageFooter}>
-                    {rightPageNum} / {book.pageCount}
+            {/* Açık kitap - Masaüstü: 2 sayfa, Mobil: 1 sayfa */}
+            <div className={`${styles.openBook} ${isMobile ? styles.mobileBook : ''}`}>
+              {/* Mobil: Tek Sayfa */}
+              {isMobile ? (
+                <div 
+                  className={`${styles.singlePage} ${turnDirection === 'left' ? styles.turningLeft : ''} ${turnDirection === 'right' ? styles.turningRight : ''} ${isMobilePageLocked ? styles.lockedPage : ''}`}
+                >
+                  <div className={styles.pageContent}>
+                    <div className={styles.pageHeader}>
+                      <span className={styles.pageNumber}>Sayfa {currentMobilePage}</span>
+                      <span className={styles.pageTitle}>{book.title}</span>
+                    </div>
+                    <div className={styles.pageText}>
+                      {getPageContent(currentMobilePage)}
+                    </div>
+                    <div className={styles.pageFooter}>
+                      {currentMobilePage} / {book.pageCount}
+                    </div>
                   </div>
                 </div>
-                {!isRightPageLocked && <div className={styles.pageCornerHint}>tıkla ▸</div>}
-              </div>
+              ) : (
+                <>
+                  {/* Masaüstü: Sol Sayfa */}
+                  <div 
+                    className={`${styles.leftPage} ${turnDirection === 'right' ? styles.turningRight : ''} ${currentSpread === 0 ? styles.firstPage : ''}`}
+                    onClick={handlePrevPage}
+                  >
+                    <div className={styles.pageContent}>
+                      <div className={styles.pageHeader}>
+                        <span className={styles.pageNumber}>Sayfa {leftPageNum}</span>
+                        <span className={styles.pageTitle}>{book.title}</span>
+                      </div>
+                      <div className={styles.pageText}>
+                        {getPageContent(leftPageNum)}
+                      </div>
+                      <div className={styles.pageFooter}>
+                        {leftPageNum} / {book.pageCount}
+                      </div>
+                    </div>
+                    {currentSpread > 0 && <div className={styles.pageCornerHint}>◂ tıkla</div>}
+                  </div>
+
+                  {/* Kitap Cildi */}
+                  <div className={styles.bookBinding}></div>
+
+                  {/* Masaüstü: Sağ Sayfa */}
+                  <div 
+                    className={`${styles.rightPage} ${turnDirection === 'left' ? styles.turningLeft : ''} ${isRightPageLocked ? styles.lockedPage : ''}`}
+                    onClick={handleNextPage}
+                  >
+                    <div className={styles.pageContent}>
+                      <div className={styles.pageHeader}>
+                        <span className={styles.pageNumber}>Sayfa {rightPageNum}</span>
+                        <span className={styles.pageTitle}>{book.title}</span>
+                      </div>
+                      <div className={styles.pageText}>
+                        {getPageContent(rightPageNum)}
+                      </div>
+                      <div className={styles.pageFooter}>
+                        {rightPageNum} / {book.pageCount}
+                      </div>
+                    </div>
+                    {!isRightPageLocked && <div className={styles.pageCornerHint}>tıkla ▸</div>}
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Ücretsiz önizleme bilgisi */}
@@ -345,14 +418,16 @@ export default function BookDetailModal({ book, isOpen, onClose }: BookDetailMod
               <span>✍️ {book.author || 'Süleyman Karakaş'}</span>
               <span>📅 {book.publishDate || '2024'}</span>
               <span>📄 {book.pageCount || 200} sayfa</span>
-              <span>🏢 {book.publisher || 'Timaş Yayınları'}</span>
+              {!isMobile && <span>🏢 {book.publisher || 'Timaş Yayınları'}</span>}
             </div>
           </div>
           
           <div className={styles.bookInfoRight}>
-            <div className={styles.bookDimensions}>
-              📐 {dimensions.thickness}mm kalınlık
-            </div>
+            {!isMobile && (
+              <div className={styles.bookDimensions}>
+                📐 {dimensions.thickness}mm kalınlık
+              </div>
+            )}
             <button 
               className={`${styles.buyButtonFloat} ${showBuyAnimation ? styles.buyAnimating : ''}`}
               onClick={() => window.open('#', '_blank')}
