@@ -1,15 +1,116 @@
 // Interviews Page Data - Clean Architecture: Domain/Data Layer
+import { Interview, InterviewPageData } from '@/types';
 
-export const INTERVIEWS_PAGE_DATA = {
-  title: 'Röportajlar',
-  subtitle: 'Verdiğim röportajlar ve söyleşiler',
-  description: 'Medya ve platformlarda yaptığım röportajlar, söyleşiler ve konuşmalar',
+export const INTERVIEWS_PAGE_DATA: InterviewPageData = {
+  title: 'Röportajlar ve Sohbetler',
+  subtitle: 'RÖPORTAJLAR VE PODCAST\'LER',
+  description: 'İlim, irfan ve manevi gelişim üzerine yaptığım röportajları ve katıldığım programları dinleyebilir, izleyebilirsiniz.',
+  contactText: 'Programınıza konuk olmamı isterseniz, lütfen',
+  contactLinkText: 'iletişim sayfasından',
   emptyState: 'Henüz röportaj eklenmemiş',
-  types: [
-    { id: 1, name: 'Video Röportaj', slug: 'video' },
-    { id: 2, name: 'Yazılı Röportaj', slug: 'yazili' },
-    { id: 3, name: 'Podcast', slug: 'podcast' },
-    { id: 4, name: 'Canlı Yayın', slug: 'canli-yayin' },
-  ],
 };
 
+export const INTERVIEWS: Interview[] = [
+  {
+    id: 1,
+    showName: 'Manevi Sohbetler',
+    episodeTitle: 'Kalbin Safası ve İç Huzur',
+    host: 'Ahmet Yılmaz',
+    date: '8 Aralık 2024',
+    duration: '45 dk',
+    description: 'Bu sohbette kalbin manevi hastalıklarından arınma yolları, iç huzura kavuşmanın sırları ve tasavvufi perspektiften nefis terbiyesi konularını ele aldık.',
+    platform: 'youtube',
+    youtubeUrl: '#',
+    category: 'podcast',
+  },
+  {
+    id: 2,
+    showName: 'İlim Meclisi',
+    episodeTitle: 'Esmâü\'l-Hüsnâ\'nın Hayatımızdaki Yeri',
+    host: 'Mehmet Kara',
+    date: '1 Aralık 2024',
+    duration: '52 dk',
+    description: 'Allah\'ın güzel isimleri olan Esmâü\'l-Hüsnâ\'nın günlük hayatımıza nasıl yansıtılabileceğini, her bir ismin taşıdığı derin manaları ve bu isimlerin tefekkürünün faydalarını konuştuk.',
+    platform: 'spotify',
+    spotifyUrl: '#',
+    category: 'podcast',
+  },
+  {
+    id: 3,
+    showName: 'Diyanet TV',
+    episodeTitle: 'Peygamber Efendimizin Ahlakı',
+    host: 'Fatma Nur Demir',
+    date: '23 Kasım 2024',
+    duration: '38 dk',
+    description: 'Hz. Peygamber\'in (s.a.v.) üstün ahlaki özelliklerini, güzel ahlakın toplumsal hayattaki önemini ve Sünnet-i Seniyye\'yi yaşama gayretini anlattık.',
+    platform: 'youtube',
+    youtubeUrl: '#',
+    category: 'interview',
+  },
+  {
+    id: 4,
+    showName: 'Gönül Sohbetleri',
+    episodeTitle: 'Tasavvuf ve Modern İnsan',
+    host: 'Ali Rıza Özkan',
+    date: '15 Kasım 2024',
+    duration: '61 dk',
+    description: 'Modern çağın getirdiği manevi boşluklar, tasavvufun bu boşlukları nasıl doldurabileceği ve günümüz insanının manevi arayışı üzerine derin bir sohbet gerçekleştirdik.',
+    platform: 'spotify',
+    spotifyUrl: '#',
+    category: 'podcast',
+  },
+  {
+    id: 5,
+    showName: 'Akademi Konferansları',
+    episodeTitle: 'İslam\'da Aile ve Toplum',
+    host: 'Panel Moderatörü',
+    date: '5 Kasım 2024',
+    duration: '90 dk',
+    description: 'İslami İlimler Akademisi\'nde düzenlenen panelde, İslam\'ın aile kurumuna bakışı, aile içi iletişim ve toplumsal sorumluluklar konularında sunumlar yaptık.',
+    platform: 'youtube',
+    youtubeUrl: '#',
+    category: 'panel',
+  },
+  {
+    id: 6,
+    showName: 'Ramazan Özel',
+    episodeTitle: 'Oruç ve Nefis Terbiyesi',
+    host: 'TRT Diyanet',
+    date: '20 Mart 2024',
+    duration: '42 dk',
+    description: 'Ramazan ayının manevi atmosferinde oruç ibadetinin hikmetleri, nefis terbiyesindeki rolü ve bu mübarek aydan nasıl istifade edebileceğimiz üzerine konuştuk.',
+    platform: 'youtube',
+    youtubeUrl: '#',
+    category: 'interview',
+  },
+  {
+    id: 7,
+    showName: 'Kitap Söyleşileri',
+    episodeTitle: 'Kırık Döngü Kitabı Üzerine',
+    host: 'Zeynep Yıldız',
+    date: '10 Şubat 2024',
+    duration: '35 dk',
+    description: 'Kırık Döngü kitabımızın yazılış hikayesi, kitapta ele aldığımız konular ve okuyuculardan gelen geri bildirimler üzerine samimi bir söyleşi gerçekleştirdik.',
+    platform: 'spotify',
+    spotifyUrl: '#',
+    category: 'interview',
+  },
+  {
+    id: 8,
+    showName: 'Gençlik Platformu',
+    episodeTitle: 'Gençlere Manevi Rehberlik',
+    host: 'Genç Nesil Derneği',
+    date: '18 Ocak 2024',
+    duration: '55 dk',
+    description: 'Üniversite gençliğiyle buluştuğumuz bu programda, modern dünyanın zorlukları karşısında manevi değerlerin önemi ve gençlere tavsiyeler paylaştık.',
+    platform: 'youtube',
+    youtubeUrl: '#',
+    category: 'conference',
+  },
+];
+
+// Benzersiz kategorileri al
+export const INTERVIEW_CATEGORIES = [...new Set(INTERVIEWS.map(item => item.category))];
+
+// Benzersiz platformları al
+export const INTERVIEW_PLATFORMS = [...new Set(INTERVIEWS.map(item => item.platform))];
