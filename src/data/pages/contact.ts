@@ -42,10 +42,12 @@ export const CONTACT_PAGE_DATA: ContactPageData = {
   ],
 
   socialLinks: [
-    { name: 'YouTube', url: 'https://youtube.com', icon: 'youtube' },
-    { name: 'Twitter', url: 'https://twitter.com', icon: 'twitter' },
-    { name: 'Instagram', url: 'https://instagram.com', icon: 'instagram' },
-    { name: 'Facebook', url: 'https://facebook.com', icon: 'facebook' },
+    { name: 'YouTube', url: 'https://youtube.com' },
+    { name: 'X', url: 'https://x.com' },
+    { name: 'LinkedIn', url: 'https://linkedin.com' },
+    { name: 'Facebook', url: 'https://facebook.com' },
+    { name: 'Instagram', url: 'https://instagram.com' },
+    { name: 'Spotify', url: 'https://open.spotify.com/' },
   ],
 
   // Sık Sorulan Sorular - Benim eklediğim özel özellik
