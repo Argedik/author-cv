@@ -1,0 +1,373 @@
+// Publishers Page Styles
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #faf6f0 0%, #f0e8dc 25%, #e6dccf 50%, #ddd2c2 75%, #d3c8b5 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  position: relative;
+}
+
+.page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(0deg, rgba(139, 69, 19, 0.02) 0px, transparent 1px, transparent 2px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  padding-top: 80px;
+
+  @media (min-width: 768px) {
+    padding-top: 100px;
+  }
+}
+
+// Hero
+.heroSection {
+  position: relative;
+  padding: 60px 20px 50px;
+  text-align: center;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(196, 163, 90, 0.08) 0%, transparent 100%);
+}
+
+.heroContent {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.sectionLabel {
+  display: inline-block;
+  font-family: 'Georgia', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c4a35a;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+
+  &::before, &::after {
+    content: '✦';
+    margin: 0 12px;
+    font-size: 0.5rem;
+    vertical-align: middle;
+    color: #d4c4a0;
+  }
+}
+
+.title {
+  font-family: 'Georgia', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #3d2e1f;
+  margin: 0 0 20px;
+
+  @media (min-width: 768px) {
+    font-size: 3.5rem;
+  }
+}
+
+.description {
+  font-family: 'Georgia', serif;
+  font-size: 1.1rem;
+  color: #5a4a3f;
+  line-height: 1.8;
+  margin: 0;
+}
+
+// Quote
+.quoteSection {
+  padding: 50px 20px;
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.8) 0%, rgba(248, 243, 230, 0.7) 100%);
+  position: relative;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(196, 163, 90, 0.3), transparent);
+  }
+
+  &::before { top: 0; }
+  &::after { bottom: 0; }
+}
+
+.quoteContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.quoteIcon {
+  font-family: 'Georgia', serif;
+  font-size: 4rem;
+  color: #c4a35a;
+  opacity: 0.4;
+}
+
+.quote {
+  font-family: 'Georgia', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  color: #3d2e1f;
+  line-height: 1.8;
+  margin: 20px 0;
+
+  @media (min-width: 768px) {
+    font-size: 1.6rem;
+  }
+}
+
+.quoteAuthor {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  font-style: normal;
+  color: #c4a35a;
+  font-weight: 600;
+}
+
+// Stats
+.statsSection {
+  padding: 50px 20px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.statCard {
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  padding: 25px 20px;
+  border-radius: 16px;
+  border: 2px solid rgba(196, 163, 90, 0.15);
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(139, 115, 85, 0.12);
+  }
+}
+
+.statValue {
+  display: block;
+  font-family: 'Georgia', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #c4a35a;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: #6b5b4f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+// Section Header
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.sectionTag {
+  display: inline-block;
+  font-family: 'Georgia', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c4a35a;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.sectionTitle {
+  font-family: 'Georgia', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #3d2e1f;
+  margin: 0 0 20px;
+
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.sectionUnderline {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c4a35a, transparent);
+  margin: 0 auto;
+}
+
+// Publishers
+.publishersSection {
+  padding: 80px 20px;
+}
+
+.primaryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.publisherCard {
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.98) 0%, rgba(248, 243, 230, 0.95) 100%);
+  padding: 40px 30px;
+  border-radius: 20px;
+  border: 2px solid rgba(196, 163, 90, 0.2);
+  box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(139, 115, 85, 0.15);
+  }
+}
+
+.publisherLogo {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.publisherName {
+  font-family: 'Georgia', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin: 0 0 8px;
+}
+
+.publisherCity {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #c4a35a;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.publisherDesc {
+  font-size: 0.95rem;
+  color: #6b5b4f;
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+.publisherStats {
+  margin-bottom: 20px;
+}
+
+.bookCount {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #c4a35a 0%, #a8893f 100%);
+  padding: 8px 20px;
+  border-radius: 20px;
+}
+
+.publisherLink {
+  font-family: 'Georgia', serif;
+  font-size: 0.95rem;
+  color: #c4a35a;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #a8893f;
+    text-decoration: underline;
+  }
+}
+
+// Secondary Publishers
+.secondarySection {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.5) 0%, rgba(248, 243, 230, 0.4) 100%);
+}
+
+.secondaryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  max-width: 800px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.secondaryCard {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid rgba(196, 163, 90, 0.15);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateX(10px);
+    border-color: rgba(196, 163, 90, 0.3);
+  }
+}
+
+.secondaryLogo {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.secondaryInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.secondaryName {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin: 0;
+}
+
+.secondaryCity {
+  font-size: 0.85rem;
+  color: #8b7355;
+}
+

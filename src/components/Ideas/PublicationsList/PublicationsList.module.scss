@@ -1,0 +1,184 @@
+// Publications List Styles
+
+.section {
+  padding: 80px 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.label {
+  display: inline-block;
+  font-family: 'Georgia', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c4a35a;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-family: 'Georgia', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #3d2e1f;
+  margin: 0 0 20px;
+
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.underline {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c4a35a, transparent);
+  margin: 0 auto;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filterBtn {
+  font-family: 'Georgia', serif;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  background: rgba(255, 252, 245, 0.9);
+  border: 2px solid rgba(196, 163, 90, 0.2);
+  border-radius: 20px;
+  color: #5a4a3f;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    border-color: #c4a35a;
+    color: #c4a35a;
+  }
+
+  &.active {
+    background: linear-gradient(135deg, #c4a35a 0%, #a8893f 100%);
+    border-color: #c4a35a;
+    color: #ffffff;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.card {
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  padding: 25px 30px;
+  border-radius: 16px;
+  border: 2px solid rgba(196, 163, 90, 0.15);
+  box-shadow: 0 4px 20px rgba(139, 115, 85, 0.08);
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+
+  &:hover {
+    transform: translateX(10px);
+    box-shadow: 0 8px 30px rgba(139, 115, 85, 0.12);
+    border-color: rgba(196, 163, 90, 0.3);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.typeIcon {
+  font-size: 1.5rem;
+}
+
+.type {
+  font-family: 'Georgia', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c4a35a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.year {
+  margin-left: auto;
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #8b7355;
+  background: rgba(196, 163, 90, 0.1);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.pubTitle {
+  font-family: 'Georgia', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+.publisher {
+  font-family: 'Georgia', serif;
+  font-size: 0.95rem;
+  color: #c4a35a;
+  margin: 0 0 12px;
+  font-style: italic;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: #6b5b4f;
+  line-height: 1.7;
+  margin: 0 0 15px;
+}
+
+.citations {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #8b7355;
+  background: rgba(196, 163, 90, 0.08);
+  padding: 6px 14px;
+  border-radius: 15px;
+}
+
+.citationIcon {
+  font-size: 1rem;
+}
+

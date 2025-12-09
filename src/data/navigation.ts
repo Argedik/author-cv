@@ -6,7 +6,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Makaleler', href: '/articles', isActive: false },
   { label: 'Haberler', href: '/news', isActive: false },
   { label: 'Röportajlar', href: '/interviews', isActive: false },
-  { label: 'Hakkımda', href: '/about', isActive: false },
+  { label: 'Biyografi', href: '/about', isActive: false },
   { label: 'İletişim', href: '/contact', isActive: false },
 ];
 
