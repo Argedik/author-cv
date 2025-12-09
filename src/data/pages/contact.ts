@@ -1,57 +1,87 @@
 // Contact Page Data - Clean Architecture: Domain/Data Layer
+import { ContactPageData } from '@/types';
 
-export const CONTACT_PAGE_DATA = {
+export const CONTACT_PAGE_DATA: ContactPageData = {
   title: 'İletişim',
-  subtitle: 'Benimle iletişime geçin',
-  description: 'Sorularınız, önerileriniz veya işbirliği teklifleri için benimle iletişime geçebilirsiniz',
-  form: {
-    name: {
-      label: 'Ad Soyad',
-      placeholder: 'Adınızı ve soyadınızı girin',
-      error: 'Ad soyad gereklidir',
-    },
-    email: {
+  subtitle: 'BİZE ULAŞIN',
+  description: 'Sorularınız, önerileriniz veya işbirliği talepleriniz için benimle iletişime geçebilirsiniz. Her mesajınız değerlidir.',
+  formTitle: 'Mesaj Gönderin',
+
+  contactInfo: [
+    {
+      id: 1,
+      type: 'email',
       label: 'E-posta',
-      placeholder: 'E-posta adresinizi girin',
-      error: 'Geçerli bir e-posta adresi girin',
+      value: 'iletisim@suleymankarakas.com',
+      link: 'mailto:iletisim@suleymankarakas.com',
+      icon: 'mail',
     },
-    subject: {
-      label: 'Konu',
-      placeholder: 'Mesaj konusunu girin',
-      error: 'Konu gereklidir',
-    },
-    message: {
-      label: 'Mesaj',
-      placeholder: 'Mesajınızı buraya yazın',
-      error: 'Mesaj gereklidir',
-    },
-    submit: 'Gönder',
-    sending: 'Gönderiliyor...',
-    success: 'Mesajınız başarıyla gönderildi!',
-    error: 'Bir hata oluştu. Lütfen tekrar deneyin.',
-  },
-  contactInfo: {
-    email: {
-      label: 'E-posta',
-      value: 'iletisim@example.com',
-    },
-    phone: {
+    {
+      id: 2,
+      type: 'phone',
       label: 'Telefon',
-      value: '+90 (XXX) XXX XX XX',
+      value: '+90 (212) 123 45 67',
+      link: 'tel:+902121234567',
+      icon: 'phone',
     },
-    address: {
+    {
+      id: 3,
+      type: 'address',
       label: 'Adres',
       value: 'İstanbul, Türkiye',
+      icon: 'location',
     },
-    social: {
-      label: 'Sosyal Medya',
-      links: [
-        { name: 'LinkedIn', url: '#' },
-        { name: 'Twitter', url: '#' },
-        { name: 'GitHub', url: '#' },
-        { name: 'Instagram', url: '#' },
-      ],
+    {
+      id: 4,
+      type: 'website',
+      label: 'Web Sitesi',
+      value: 'www.suleymankarakas.com',
+      link: 'https://suleymankarakas.com',
+      icon: 'globe',
     },
-  },
-};
+  ],
 
+  socialLinks: [
+    { name: 'YouTube', url: 'https://youtube.com', icon: 'youtube' },
+    { name: 'Twitter', url: 'https://twitter.com', icon: 'twitter' },
+    { name: 'Instagram', url: 'https://instagram.com', icon: 'instagram' },
+    { name: 'Facebook', url: 'https://facebook.com', icon: 'facebook' },
+  ],
+
+  // Sık Sorulan Sorular - Benim eklediğim özel özellik
+  faq: [
+    {
+      id: 1,
+      question: 'Kitaplarınızı nereden satın alabilirim?',
+      answer: 'Kitaplarım tüm büyük kitapçılarda, online platformlarda (D&R, Idefix, Amazon, Kitapyurdu) ve kendi web sitemiz üzerinden satın alınabilir. Ayrıca dijital versiyonları e-kitap formatında da mevcuttur.',
+    },
+    {
+      id: 2,
+      question: 'Özel ders veya danışmanlık hizmeti veriyor musunuz?',
+      answer: 'Zaman kısıtlamaları nedeniyle bireysel özel ders vermiyorum. Ancak online eğitim platformumuz üzerinden video dersler ve canlı yayın sohbetlerine katılabilirsiniz. Kurumsal danışmanlık talepleri için iletişime geçebilirsiniz.',
+    },
+    {
+      id: 3,
+      question: 'Programa, konferansa veya röportaja konuk olarak katılır mısınız?',
+      answer: 'Evet, zamanım elverdiği ölçüde programlara, konferanslara ve röportajlara katılmaya çalışıyorum. Bu tür talepler için lütfen detaylı bilgi vererek iletişim formunu doldurun. Talebinizi değerlendirip en kısa sürede dönüş yapacağız.',
+    },
+    {
+      id: 4,
+      question: 'Kitaplarınızın basılı olmayan bölümleri veya yayımlanmamış yazılarınız var mı?',
+      answer: 'Sosyal medya hesaplarım ve web sitemde düzenli olarak kısa yazılar, hikmetli sözler ve değerlendirmeler paylaşıyorum. Ayrıca bültenime abone olarak özel içeriklere ve yeni yayınlardan ilk siz haberdar olabilirsiniz.',
+    },
+    {
+      id: 5,
+      question: 'Eğitim programlarınıza nasıl kayıt olabilirim?',
+      answer: 'Online eğitim platformumuz üzerinden kayıt olabilirsiniz. Yüz yüze eğitimler için İslami İlimler Akademisi\'nin web sitesini ziyaret edebilir veya iletişim numaralarımızdan detaylı bilgi alabilirsiniz.',
+    },
+    {
+      id: 6,
+      question: 'Mesajıma ne kadar sürede cevap alırım?',
+      answer: 'Tüm mesajlar dikkatle okunmakta ve mümkün olan en kısa sürede yanıtlanmaktadır. Yoğunluğa bağlı olarak genellikle 3-5 iş günü içinde dönüş yapmaya çalışıyoruz. Acil konular için lütfen konu başlığında belirtin.',
+    },
+  ],
+
+  newsletterTitle: 'Bültene Abone Olun',
+  newsletterDescription: 'Yeni kitaplar, makaleler ve etkinliklerden ilk siz haberdar olun.',
+};

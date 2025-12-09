@@ -9,63 +9,24 @@ export default function AboutSection({ data }: AboutSectionProps) {
     <section id="about" className={styles.aboutSection}>
 
       <div className={styles.container}>
-        {/* Sol taraf - Osmanlı tarzı çerçeveli resim */}
+        {/* Sol taraf - Resim */}
         <div className={styles.imageColumn}>
-          <div className={styles.ottomanFrame}>
-            {/* Köşe süsleri */}
-            <div className={`${styles.cornerDecor} ${styles.topLeft}`}>
-              <svg viewBox="0 0 60 60">
-                <path d="M5,55 Q5,5 55,5" fill="none" stroke="currentColor" strokeWidth="2"/>
-                <path d="M10,50 Q10,10 50,10" fill="none" stroke="currentColor" strokeWidth="1"/>
-                <circle cx="30" cy="30" r="4" fill="currentColor"/>
-                <path d="M20,20 L25,15 L30,20 L25,25 Z" fill="currentColor"/>
-              </svg>
-            </div>
-            <div className={`${styles.cornerDecor} ${styles.topRight}`}>
-              <svg viewBox="0 0 60 60">
-                <path d="M55,55 Q55,5 5,5" fill="none" stroke="currentColor" strokeWidth="2"/>
-                <path d="M50,50 Q50,10 10,10" fill="none" stroke="currentColor" strokeWidth="1"/>
-                <circle cx="30" cy="30" r="4" fill="currentColor"/>
-                <path d="M40,20 L35,15 L30,20 L35,25 Z" fill="currentColor"/>
-              </svg>
-            </div>
-            <div className={`${styles.cornerDecor} ${styles.bottomLeft}`}>
-              <svg viewBox="0 0 60 60">
-                <path d="M5,5 Q5,55 55,55" fill="none" stroke="currentColor" strokeWidth="2"/>
-                <path d="M10,10 Q10,50 50,50" fill="none" stroke="currentColor" strokeWidth="1"/>
-                <circle cx="30" cy="30" r="4" fill="currentColor"/>
-                <path d="M20,40 L25,45 L30,40 L25,35 Z" fill="currentColor"/>
-              </svg>
-            </div>
-            <div className={`${styles.cornerDecor} ${styles.bottomRight}`}>
-              <svg viewBox="0 0 60 60">
-                <path d="M55,5 Q55,55 5,55" fill="none" stroke="currentColor" strokeWidth="2"/>
-                <path d="M50,10 Q50,50 10,50" fill="none" stroke="currentColor" strokeWidth="1"/>
-                <circle cx="30" cy="30" r="4" fill="currentColor"/>
-                <path d="M40,40 L35,45 L30,40 L35,35 Z" fill="currentColor"/>
-              </svg>
-            </div>
-
-            {/* Kenar süsleri */}
-            <div className={`${styles.edgeDecor} ${styles.topEdge}`}></div>
-            <div className={`${styles.edgeDecor} ${styles.bottomEdge}`}></div>
-            <div className={`${styles.edgeDecor} ${styles.leftEdge}`}></div>
-            <div className={`${styles.edgeDecor} ${styles.rightEdge}`}></div>
-
-            {/* İç çerçeve */}
-            <div className={styles.innerFrame}>
-              {data.backgroundImage && (
-                <Image
-                  src={data.backgroundImage}
-                  alt={data.title}
-                  width={400}
-                  height={500}
-                  className={styles.authorImage}
-                  priority
-                />
-              )}
-              <div className={styles.imageOverlay}></div>
-            </div>
+          <div className={styles.imageWrapper}>
+            {/* Resim - şimdilik error versin, src kullanıcı ekleyecek */}
+            {data.backgroundImage ? (
+              <Image
+                src={data.backgroundImage}
+                alt={data.title}
+                width={400}
+                height={500}
+                className={styles.authorImage}
+                priority
+              />
+            ) : (
+              <div className={styles.imagePlaceholder}>
+                <span>Resim buraya gelecek</span>
+              </div>
+            )}
           </div>
         </div>
 

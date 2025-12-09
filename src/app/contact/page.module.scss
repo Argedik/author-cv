@@ -1,0 +1,567 @@
+// Contact Page Styles - Osmanlı Temalı İletişim Sayfası
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #faf6f0 0%, #f0e8dc 25%, #e6dccf 50%, #ddd2c2 75%, #d3c8b5 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  position: relative;
+}
+
+// Osmanlı kağıt dokusu
+.page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(0deg, rgba(139, 69, 19, 0.02) 0px, transparent 1px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(139, 69, 19, 0.02) 0px, transparent 1px, transparent 2px),
+    radial-gradient(ellipse 500px 400px at 15% 85%, rgba(196, 163, 90, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 400px 350px at 85% 15%, rgba(180, 150, 110, 0.06) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  padding-top: 80px;
+
+  @media (min-width: 768px) {
+    padding-top: 100px;
+  }
+}
+
+// Hero Bölümü
+.heroSection {
+  padding: 60px 20px 40px;
+  text-align: center;
+  position: relative;
+}
+
+.heroContent {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.sectionLabel {
+  display: inline-block;
+  font-family: 'Georgia', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c4a35a;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+
+  &::before, &::after {
+    content: '✦';
+    margin: 0 12px;
+    font-size: 0.5rem;
+    vertical-align: middle;
+    color: #d4c4a0;
+  }
+}
+
+.title {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #3d2e1f;
+  margin: 0 0 18px;
+  letter-spacing: 2px;
+
+  @media (min-width: 768px) {
+    font-size: 3.5rem;
+    letter-spacing: 3px;
+  }
+}
+
+.subtitle {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: #8b7355;
+  margin: 0 0 25px;
+  line-height: 1.8;
+
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
+  }
+}
+
+.titleUnderline {
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c4a35a, transparent);
+  margin: 0 auto;
+}
+
+// Ana İçerik Bölümü
+.contentSection {
+  padding: 50px 20px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+  }
+}
+
+// Form Bölümü
+.formSection {
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  padding: 35px 25px;
+  border-radius: 20px;
+  border: 2px solid rgba(196, 163, 90, 0.2);
+  box-shadow: 0 6px 30px rgba(139, 115, 85, 0.08);
+
+  @media (min-width: 768px) {
+    padding: 50px 45px;
+  }
+}
+
+.formTitle {
+  font-family: 'Georgia', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin: 0 0 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(196, 163, 90, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &::before {
+    content: '✉';
+    color: #c4a35a;
+    font-size: 1.3rem;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: 'Georgia', serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #5a4a3f;
+}
+
+.required {
+  color: #c4a35a;
+}
+
+.input, .select, .textarea {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 1rem;
+  color: #3d2e1f;
+  padding: 14px 18px;
+  border: 2px solid rgba(196, 163, 90, 0.25);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  outline: none;
+
+  &::placeholder {
+    color: #a89878;
+  }
+
+  &:focus {
+    border-color: #c4a35a;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 0 3px rgba(196, 163, 90, 0.15);
+  }
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c4a35a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 45px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #c4a35a 0%, #a8893f 100%);
+  padding: 16px 35px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(196, 163, 90, 0.3);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(196, 163, 90, 0.4);
+    background: linear-gradient(135deg, #d4b36a 0%, #b8994f 100%);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  svg {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+// Sağ Taraf - Bilgi Kartları
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.contactInfoCard, .socialCard, .newsletterCard {
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  padding: 30px 25px;
+  border-radius: 16px;
+  border: 2px solid rgba(196, 163, 90, 0.15);
+  box-shadow: 0 4px 20px rgba(139, 115, 85, 0.06);
+
+  @media (min-width: 768px) {
+    padding: 35px 30px;
+  }
+}
+
+.cardTitle {
+  font-family: 'Georgia', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(196, 163, 90, 0.2);
+}
+
+// İletişim Listesi
+.contactList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.contactIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(196, 163, 90, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: #c4a35a;
+  }
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.contactLabel {
+  font-family: 'Georgia', serif;
+  font-size: 0.85rem;
+  color: #8b7355;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contactValue {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 0.95rem;
+  color: #3d2e1f;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #c4a35a;
+  }
+}
+
+// Sosyal Medya
+.socialLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(196, 163, 90, 0.1);
+  border: 1px solid rgba(196, 163, 90, 0.25);
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    color: #6b5b4f;
+    transition: color 0.3s ease;
+  }
+
+  span {
+    font-family: 'Georgia', serif;
+    font-size: 0.9rem;
+    color: #5a4a3f;
+    font-weight: 500;
+  }
+
+  &:hover {
+    background: #c4a35a;
+    border-color: #c4a35a;
+    transform: translateY(-2px);
+
+    svg, span {
+      color: #ffffff;
+    }
+  }
+}
+
+// Bülten
+.newsletterDescription {
+  font-family: 'Georgia', serif;
+  font-size: 0.95rem;
+  color: #6b5b4f;
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.newsletterInput {
+  flex: 1;
+  min-width: 180px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 0.95rem;
+  color: #3d2e1f;
+  padding: 12px 16px;
+  border: 2px solid rgba(196, 163, 90, 0.25);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  outline: none;
+  transition: all 0.3s ease;
+
+  &::placeholder {
+    color: #a89878;
+  }
+
+  &:focus {
+    border-color: #c4a35a;
+    background: rgba(255, 255, 255, 1);
+  }
+}
+
+.newsletterButton {
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #c4a35a 0%, #a8893f 100%);
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #d4b36a 0%, #b8994f 100%);
+    transform: translateY(-2px);
+  }
+}
+
+// SSS Bölümü
+.faqSection {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, transparent 0%, rgba(196, 163, 90, 0.05) 50%, transparent 100%);
+}
+
+.faqHeader {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.faqLabel {
+  display: inline-block;
+  font-family: 'Georgia', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c4a35a;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.faqTitle {
+  font-family: 'Georgia', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #3d2e1f;
+  margin: 0 0 20px;
+  letter-spacing: 1px;
+
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.faqUnderline {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c4a35a, transparent);
+  margin: 0 auto;
+}
+
+.faqContainer {
+  max-width: 850px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.faqItem {
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  border-radius: 12px;
+  border: 2px solid rgba(196, 163, 90, 0.15);
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &.open {
+    border-color: rgba(196, 163, 90, 0.4);
+    box-shadow: 0 6px 25px rgba(139, 115, 85, 0.1);
+
+    .faqQuestion {
+      background: rgba(196, 163, 90, 0.1);
+    }
+
+    .faqAnswer {
+      max-height: 500px;
+      padding: 0 25px 25px;
+      opacity: 1;
+    }
+  }
+}
+
+.faqQuestion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 22px 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Georgia', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(196, 163, 90, 0.08);
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.faqIcon {
+  flex-shrink: 0;
+  color: #c4a35a;
+  transition: transform 0.3s ease;
+}
+
+.faqAnswer {
+  max-height: 0;
+  padding: 0 25px;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+
+  p {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-size: 0.95rem;
+    color: #6b5b4f;
+    line-height: 1.8;
+    margin: 0;
+  }
+}
+

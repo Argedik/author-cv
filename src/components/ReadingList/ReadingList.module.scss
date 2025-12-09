@@ -1,0 +1,248 @@
+// ReadingList Styles - Okuma listesi
+// ÖZELLİK 2: Bu dosyayı silmek için klasörü tamamen silebilirsiniz
+
+.readingList {
+  background: linear-gradient(135deg, rgba(255, 252, 245, 0.95) 0%, rgba(248, 243, 230, 0.9) 100%);
+  border-radius: 16px;
+  border: 2px solid rgba(196, 163, 90, 0.2);
+  box-shadow: 0 4px 20px rgba(139, 115, 85, 0.08);
+  overflow: hidden;
+  position: sticky;
+  top: 120px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(196, 163, 90, 0.12) 0%, rgba(180, 150, 110, 0.08) 100%);
+  border-bottom: 2px solid rgba(196, 163, 90, 0.15);
+}
+
+.headerIcon {
+  font-size: 1.5rem;
+}
+
+.title {
+  font-family: 'Georgia', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin: 0;
+  flex: 1;
+}
+
+.count {
+  font-family: 'Georgia', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #c4a35a 0%, #a8893f 100%);
+  padding: 4px 12px;
+  border-radius: 15px;
+}
+
+// Boş Durum
+.emptyState {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+
+.emptyState p {
+  font-family: 'Georgia', serif;
+  font-size: 0.95rem;
+  color: #6b5b4f;
+  margin: 0 0 8px;
+}
+
+.emptyHint {
+  font-size: 0.8rem;
+  color: #8b7355;
+  line-height: 1.5;
+}
+
+// Liste
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 400px;
+  overflow-y: auto;
+
+  // Özel scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(196, 163, 90, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(196, 163, 90, 0.3);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(196, 163, 90, 0.5);
+    }
+  }
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(196, 163, 90, 0.1);
+  animation: slideIn 0.3s ease forwards;
+  opacity: 0;
+  transform: translateX(-10px);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: rgba(196, 163, 90, 0.05);
+
+    .removeButton {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.itemContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemTitle {
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  text-decoration: none;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #c4a35a;
+  }
+}
+
+.itemMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.itemReadTime {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #8b7355;
+
+  svg {
+    opacity: 0.7;
+  }
+}
+
+.itemCategory {
+  font-family: 'Georgia', serif;
+  font-size: 0.7rem;
+  color: #c4a35a;
+  background: rgba(196, 163, 90, 0.12);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.removeButton {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(196, 163, 90, 0.1);
+  color: #8b7355;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(200, 80, 80, 0.15);
+    color: #c84040;
+    opacity: 1;
+  }
+}
+
+// Alt Kısım
+.footer {
+  padding: 15px 20px;
+  background: rgba(196, 163, 90, 0.08);
+  border-top: 1px solid rgba(196, 163, 90, 0.15);
+}
+
+.totalTime {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.totalLabel {
+  font-family: 'Georgia', serif;
+  font-size: 0.85rem;
+  color: #6b5b4f;
+}
+
+.totalValue {
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #c4a35a;
+}
+
+.clearButton {
+  width: 100%;
+  font-family: 'Georgia', serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #8b7355;
+  background: transparent;
+  border: 1px solid rgba(196, 163, 90, 0.3);
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(196, 163, 90, 0.1);
+    border-color: rgba(196, 163, 90, 0.5);
+    color: #6b5b4f;
+  }
+}
+

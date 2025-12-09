@@ -1,24 +1,38 @@
 .booksSection {
-  padding: 0 20px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 50px;
+  justify-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: visible;
 }
 
-// Tablet ve üzeri
-@media (min-width: 768px) {
+// Tablet - 2 sütun
+@media (min-width: 640px) {
   .booksSection {
-    padding: 0 40px 60px;
-    gap: 50px;
+    padding: 30px;
+    gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-// Desktop
+// Desktop - 3 sütun
 @media (min-width: 1024px) {
   .booksSection {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 40px 80px;
+    padding: 50px 60px 80px;
+    gap: 50px;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
+// Large Desktop - 4 sütun
+@media (min-width: 1400px) {
+  .booksSection {
+    max-width: 1400px;
+    padding: 50px 80px 80px;
+    gap: 60px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
