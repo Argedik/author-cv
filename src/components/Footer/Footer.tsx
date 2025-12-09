@@ -1,9 +1,40 @@
 "use client";
 
+import { useState, useEffect, useRef } from 'react';
 import { FooterProps } from '@/types';
+import LegalPopup from '@/components/LegalPopup/LegalPopup';
 import styles from './Footer.module.scss';
 
 export default function Footer({ data }: FooterProps) {
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupPosition, setPopupPosition] = useState<{ top: number; left: number } | null>(null);
+  const privacyLinkRef = useRef<HTMLAnchorElement>(null);
+  const termsLinkRef = useRef<HTMLAnchorElement>(null);
+
+  const handleLegalLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, linkRef: React.RefObject<HTMLAnchorElement | null>) => {
+    e.preventDefault();
+    
+    if (linkRef.current) {
+      const rect = linkRef.current.getBoundingClientRect();
+      setPopupPosition({
+        top: rect.top - 10, // Linkin üstünde 10px yukarıda
+        left: rect.left + rect.width / 2, // Linkin ortası
+      });
+      setShowPopup(true);
+    }
+  };
+
+  // 3 saniye sonra otomatik kapat
+  useEffect(() => {
+    if (showPopup) {
+      const timer = setTimeout(() => {
+        setShowPopup(false);
+        setPopupPosition(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showPopup]);
+
   return (
     <footer className={styles.footer}>
       {/* Dekoratif üst kenar */}
@@ -92,9 +123,23 @@ export default function Footer({ data }: FooterProps) {
         <div className={styles.bottomContent}>
           <p className={styles.copyright}>{data.copyright}</p>
           <div className={styles.legalLinks}>
-            <a href="#" className={styles.legalLink}>Gizlilik Politikası</a>
+            <a 
+              ref={privacyLinkRef}
+              href="#" 
+              className={styles.legalLink}
+              onClick={(e) => handleLegalLinkClick(e, privacyLinkRef)}
+            >
+              Gizlilik Politikası
+            </a>
             <span className={styles.legalDivider}>|</span>
-            <a href="#" className={styles.legalLink}>Kullanım Şartları</a>
+            <a 
+              ref={termsLinkRef}
+              href="#" 
+              className={styles.legalLink}
+              onClick={(e) => handleLegalLinkClick(e, termsLinkRef)}
+            >
+              Kullanım Şartları
+            </a>
           </div>
         </div>
       </div>
@@ -103,6 +148,16 @@ export default function Footer({ data }: FooterProps) {
       <div className={styles.bottomDecoration}>
         <div className={styles.pageEdge}></div>
       </div>
+
+      {/* Popup */}
+      <LegalPopup 
+        isOpen={showPopup} 
+        position={popupPosition}
+        onClose={() => {
+          setShowPopup(false);
+          setPopupPosition(null);
+        }} 
+      />
     </footer>
   );
 }
