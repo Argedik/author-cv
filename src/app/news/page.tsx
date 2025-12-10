@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef, useCallback } from 'react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { useScroll } from '@/hooks/useScroll';
 import { NEWS_PAGE_DATA, NEWS_ITEMS, NEWS_YEARS } from '@/data/pages/news';
 import Header from '@/components/Header/Header';
@@ -17,7 +17,19 @@ import styles from './page.module.scss';
 export default function NewsPage() {
   const scrolled = useScroll(50);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [expandedNewsId, setExpandedNewsId] = useState<number | null>(null);
   const swiperRef = useRef<SwiperType | null>(null);
+
+  // Mobil kontrolü
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Filtrelenmiş haberler
   const filteredNews = useMemo(() => {
@@ -133,92 +145,142 @@ export default function NewsPage() {
           <div className={styles.newsSection}>
             <h2 className={styles.newsSectionTitle}>Haberler</h2>
             
-            {/* Swiper ile Haberler */}
-            {allNews.length > 0 ? (
-              <div className={styles.swiperContainer}>
-                <Swiper
-                  modules={[Virtual]}
-                  spaceBetween={20}
-                  slidesPerView={5}
-                  slidesPerGroup={1}
-                  virtual
-                  onSwiper={(swiper) => {
-                    swiperRef.current = swiper;
-                  }}
-                  breakpoints={{
-                    320: {
-                      slidesPerView: 1,
-                      spaceBetween: 15,
-                    },
-                    640: {
-                      slidesPerView: 1.2,
-                      spaceBetween: 20,
-                    },
-                    768: {
-                      slidesPerView: 1.5,
-                      spaceBetween: 25,
-                    },
-                    1024: {
-                      slidesPerView: 1.8,
-                      spaceBetween: 30,
-                    },
-                    1280: {
-                      slidesPerView: 2,
-                      spaceBetween: 30,
-                    },
-                  }}
-                  className={styles.newsSwiper}
-                >
-                  {allNews.map((news, index) => (
-                    <SwiperSlide key={news.id} virtualIndex={index}>
-                      <NewsCard news={news} index={index} />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-
-                {/* Özel Pagination Butonları */}
-                <div className={styles.customPagination}>
-                  <button 
-                    className={styles.paginationButton}
-                    onClick={handlePrev4}
-                    aria-label="Önceki 4 haber"
-                  >
-                    ← Önceki 4
-                  </button>
-                  <button 
-                    className={styles.paginationButton}
-                    onClick={handleGoToFirst}
-                    aria-label="1. habere git"
-                  >
-                    1. Haber
-                  </button>
-                  <button 
-                    className={styles.paginationButton}
-                    onClick={handleGoTo10}
-                    disabled={allNews.length < 10}
-                    aria-label="10. habere git"
-                  >
-                    10. Haber
-                  </button>
-                  <button 
-                    className={styles.paginationButton}
-                    onClick={handleGoTo100}
-                    disabled={allNews.length < 100}
-                    aria-label="100. habere git"
-                  >
-                    100. Haber
-                  </button>
-                  <button 
-                    className={styles.paginationButton}
-                    onClick={handleGoToLast}
-                    aria-label="Son habere git"
-                  >
-                    Son Haber
-                  </button>
+            {/* MOBİL - Gazete Arşivi Görünümü */}
+            {isMobile ? (
+              <div className={styles.mobileNewsArchive}>
+                {/* Gazete Başlığı */}
+                <div className={styles.newspaperHeader}>
+                  <div className={styles.newspaperLogo}>📰</div>
+                  <h3 className={styles.newspaperTitle}>Basın Arşivi</h3>
+                  <div className={styles.newspaperDate}>
+                    {selectedYear || 'Tüm Yıllar'}
+                  </div>
                 </div>
+
+                {/* Timeline Görünümü */}
+                {allNews.length > 0 ? (
+                  <div className={styles.newsTimeline}>
+                    {allNews.map((news, index) => (
+                      <div 
+                        key={news.id} 
+                        className={`${styles.timelineItem} ${expandedNewsId === news.id ? styles.expanded : ''}`}
+                        style={{ animationDelay: `${index * 0.08}s` }}
+                      >
+                        <div className={styles.timelineDot}>
+                          <span className={styles.dotInner}></span>
+                        </div>
+                        <div className={styles.timelineLine}></div>
+                        
+                        <div 
+                          className={styles.timelineContent}
+                          onClick={() => setExpandedNewsId(expandedNewsId === news.id ? null : news.id)}
+                        >
+                          <div className={styles.timelineHeader}>
+                            <span className={styles.timelineDate}>{news.date}</span>
+                            <span className={styles.timelineSource}>{news.source}</span>
+                          </div>
+                          <h4 className={styles.timelineTitle}>{news.title}</h4>
+                          
+                          {expandedNewsId === news.id && (
+                            <div className={styles.timelineExpanded}>
+                              <p className={styles.timelineDesc}>{news.description}</p>
+                              <a href={news.link} className={styles.timelineLink} target="_blank" rel="noopener noreferrer">
+                                Haberi Oku →
+                              </a>
+                            </div>
+                          )}
+                          
+                          <div className={styles.expandIndicator}>
+                            {expandedNewsId === news.id ? '▲' : '▼'}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className={styles.emptyState}>{NEWS_PAGE_DATA.emptyState}</p>
+                )}
               </div>
             ) : (
-              <p className={styles.emptyState}>{NEWS_PAGE_DATA.emptyState}</p>
+              /* DESKTOP - Swiper ile Haberler */
+              allNews.length > 0 ? (
+                <div className={styles.swiperContainer}>
+                  <Swiper
+                    modules={[Virtual]}
+                    spaceBetween={20}
+                    slidesPerView={5}
+                    slidesPerGroup={1}
+                    virtual
+                    onSwiper={(swiper) => {
+                      swiperRef.current = swiper;
+                    }}
+                    breakpoints={{
+                      768: {
+                        slidesPerView: 1.5,
+                        spaceBetween: 25,
+                      },
+                      1024: {
+                        slidesPerView: 1.8,
+                        spaceBetween: 30,
+                      },
+                      1280: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                      },
+                    }}
+                    className={styles.newsSwiper}
+                  >
+                    {allNews.map((news, index) => (
+                      <SwiperSlide key={news.id} virtualIndex={index}>
+                        <NewsCard news={news} index={index} />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+
+                  {/* Özel Pagination Butonları */}
+                  <div className={styles.customPagination}>
+                    <button 
+                      className={styles.paginationButton}
+                      onClick={handlePrev4}
+                      aria-label="Önceki 4 haber"
+                    >
+                      ← Önceki 4
+                    </button>
+                    <button 
+                      className={styles.paginationButton}
+                      onClick={handleGoToFirst}
+                      aria-label="1. habere git"
+                    >
+                      1. Haber
+                    </button>
+                    <button 
+                      className={styles.paginationButton}
+                      onClick={handleGoTo10}
+                      disabled={allNews.length < 10}
+                      aria-label="10. habere git"
+                    >
+                      10. Haber
+                    </button>
+                    <button 
+                      className={styles.paginationButton}
+                      onClick={handleGoTo100}
+                      disabled={allNews.length < 100}
+                      aria-label="100. habere git"
+                    >
+                      100. Haber
+                    </button>
+                    <button 
+                      className={styles.paginationButton}
+                      onClick={handleGoToLast}
+                      aria-label="Son habere git"
+                    >
+                      Son Haber
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p className={styles.emptyState}>{NEWS_PAGE_DATA.emptyState}</p>
+              )
             )}
           </div>
         </section>

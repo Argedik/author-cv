@@ -1,95 +1,196 @@
 "use client";
 
+import { useState } from 'react';
 import { useScroll } from '@/hooks/useScroll';
 import { PRESS_PAGE_DATA } from '@/data/pages/press';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import { FOOTER_DATA } from '@/data/footer';
-import MediaGallery from '@/components/Ideas/MediaGallery/MediaGallery';
-import PressQuotes from '@/components/Ideas/PressQuotes/PressQuotes';
 import styles from './page.module.scss';
 
 export default function PressPage() {
   const scrolled = useScroll(50);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+
+  const filteredItems = selectedType 
+    ? PRESS_PAGE_DATA.pressItems.filter(item => item.type === selectedType)
+    : PRESS_PAGE_DATA.pressItems;
 
   return (
     <div className={styles.page}>
       <Header scrolled={scrolled} />
       <main className={styles.main}>
-        {/* Hero */}
-        <section className={styles.heroSection}>
-          <div className={styles.heroBackground}></div>
-          <div className={styles.heroContent}>
-            <span className={styles.sectionLabel}>{PRESS_PAGE_DATA.subtitle}</span>
-            <h1 className={styles.title}>{PRESS_PAGE_DATA.title}</h1>
-            <p className={styles.description}>{PRESS_PAGE_DATA.description}</p>
-          </div>
-        </section>
-
-        {/* İstatistikler */}
-        <section className={styles.statsSection}>
-          <div className={styles.statsGrid}>
-            {PRESS_PAGE_DATA.stats.map((stat) => (
-              <div key={stat.id} className={styles.statCard}>
-                <span className={styles.statValue}>{stat.value}</span>
-                <span className={styles.statLabel}>{stat.label}</span>
+        {/* Gazete Manşeti Hero */}
+        <section className={styles.newsroomHero}>
+          <div className={styles.newspaperFront}>
+            <div className={styles.newspaperHeader}>
+              <span className={styles.editionDate}>Özel Sayı • 2024</span>
+              <h1 className={styles.masthead}>{PRESS_PAGE_DATA.title}</h1>
+              <div className={styles.headerDecor}>
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Basın İletişim */}
-        <section className={styles.contactSection}>
-          <div className={styles.contactCard}>
-            <div className={styles.contactIcon}>📬</div>
-            <h2 className={styles.contactTitle}>{PRESS_PAGE_DATA.contactInfo.title}</h2>
-            <p className={styles.contactNote}>{PRESS_PAGE_DATA.contactInfo.note}</p>
-            <div className={styles.contactDetails}>
-              <a href={`mailto:${PRESS_PAGE_DATA.contactInfo.email}`} className={styles.contactLink}>
-                <span className={styles.linkIcon}>✉️</span>
-                {PRESS_PAGE_DATA.contactInfo.email}
-              </a>
-              <span className={styles.contactPhone}>
-                <span className={styles.linkIcon}>📞</span>
-                {PRESS_PAGE_DATA.contactInfo.phone}
-              </span>
+            </div>
+            <div className={styles.headlineSection}>
+              <span className={styles.headlineLabel}>{PRESS_PAGE_DATA.subtitle}</span>
+              <p className={styles.headlineText}>{PRESS_PAGE_DATA.description}</p>
+            </div>
+            <div className={styles.newspaperColumns}>
+              <div className={styles.column}></div>
+              <div className={styles.column}></div>
+              <div className={styles.column}></div>
             </div>
           </div>
         </section>
 
-        {/* Ideas Component 1: Media Gallery */}
-        <MediaGallery items={PRESS_PAGE_DATA.pressItems} types={PRESS_PAGE_DATA.mediaTypes} />
+        {/* İstatistikler - Haber Ticker */}
+        <section className={styles.tickerSection}>
+          <div className={styles.tickerContainer}>
+            <div className={styles.tickerLabel}>
+              <span className={styles.liveIcon}></span>
+              CANLI
+            </div>
+            <div className={styles.tickerContent}>
+              {PRESS_PAGE_DATA.stats.map((stat, index) => (
+                <span key={stat.id} className={styles.tickerItem}>
+                  <span className={styles.tickerValue}>{stat.value}</span>
+                  <span className={styles.tickerText}>{stat.label}</span>
+                  {index < PRESS_PAGE_DATA.stats.length - 1 && (
+                    <span className={styles.tickerSeparator}>•</span>
+                  )}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        {/* Ideas Component 2: Press Quotes */}
-        <PressQuotes quotes={PRESS_PAGE_DATA.quotes} />
+        {/* Basın İletişim - Mikrofon Kartı */}
+        <section className={styles.pressContactSection}>
+          <div className={styles.microphoneCard}>
+            <div className={styles.micIcon}>🎙️</div>
+            <div className={styles.micContent}>
+              <h2 className={styles.contactTitle}>{PRESS_PAGE_DATA.contactInfo.title}</h2>
+              <p className={styles.contactNote}>{PRESS_PAGE_DATA.contactInfo.note}</p>
+              <div className={styles.contactLinks}>
+                <a href={`mailto:${PRESS_PAGE_DATA.contactInfo.email}`} className={styles.contactLink}>
+                  <span className={styles.linkIcon}>✉️</span>
+                  <span>{PRESS_PAGE_DATA.contactInfo.email}</span>
+                </a>
+                <span className={styles.contactPhone}>
+                  <span className={styles.linkIcon}>📞</span>
+                  <span>{PRESS_PAGE_DATA.contactInfo.phone}</span>
+                </span>
+              </div>
+            </div>
+            <div className={styles.soundWaves}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </section>
 
-        {/* Son Haberler Listesi */}
-        <section className={styles.newsSection}>
+        {/* Basın Alıntıları - TV Ekranı */}
+        <section className={styles.quotesSection}>
+          <div className={styles.tvScreen}>
+            <div className={styles.tvFrame}>
+              <div className={styles.screenContent}>
+                {PRESS_PAGE_DATA.quotes.slice(0, 1).map((quote) => (
+                  <div key={quote.id} className={styles.quoteDisplay}>
+                    <div className={styles.channelBadge}>{quote.outlet}</div>
+                    <blockquote className={styles.tvQuote}>
+                      "{quote.text}"
+                    </blockquote>
+                    <cite className={styles.quoterName}>— {quote.author}</cite>
+                  </div>
+                ))}
+                <div className={styles.liveIndicator}>
+                  <span className={styles.recDot}></span>
+                  KAYIT
+                </div>
+              </div>
+              <div className={styles.screenReflection}></div>
+            </div>
+            <div className={styles.tvStand}></div>
+          </div>
+        </section>
+
+        {/* Medya Tipi Filtreleri */}
+        <section className={styles.mediaFilters}>
+          <div className={styles.filterTabs}>
+            <button
+              className={`${styles.filterTab} ${selectedType === null ? styles.active : ''}`}
+              onClick={() => setSelectedType(null)}
+            >
+              Tümü
+            </button>
+            {PRESS_PAGE_DATA.mediaTypes.map((type) => (
+              <button
+                key={type}
+                className={`${styles.filterTab} ${selectedType === type ? styles.active : ''}`}
+                onClick={() => setSelectedType(type)}
+              >
+                {type === 'tv' ? '📺 TV' : 
+                 type === 'radio' ? '📻 Radyo' : 
+                 type === 'print' ? '📰 Basılı' : 
+                 type === 'online' ? '💻 Online' : type}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Medya Haberleri - Gazete Küpürleri */}
+        <section className={styles.clippingsSection}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>GÜNCEL</span>
-            <h2 className={styles.sectionTitle}>Son Medya Haberleri</h2>
-            <div className={styles.sectionUnderline}></div>
+            <span className={styles.headerIcon}>📰</span>
+            <h2>Medya Haberleri</h2>
           </div>
 
-          <div className={styles.newsList}>
-            {PRESS_PAGE_DATA.pressItems.slice(0, 5).map((item, index) => (
+          <div className={styles.clippingsWall}>
+            {filteredItems.slice(0, 8).map((item, index) => (
               <article 
-                key={item.id} 
-                className={styles.newsItem}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                key={item.id}
+                className={styles.clipping}
+                style={{ 
+                  animationDelay: `${index * 0.1}s`,
+                  transform: `rotate(${(index % 2 === 0 ? 1 : -1) * (Math.random() * 2)}deg)`
+                }}
               >
-                <span className={styles.newsIcon}>{item.outletLogo}</span>
-                <div className={styles.newsContent}>
-                  <h3 className={styles.newsTitle}>{item.title}</h3>
-                  <div className={styles.newsMeta}>
-                    <span className={styles.newsOutlet}>{item.outlet}</span>
-                    <span className={styles.newsDivider}>•</span>
-                    <span className={styles.newsDate}>{item.date}</span>
+                <div className={styles.clippingPin}></div>
+                <div className={styles.clippingContent}>
+                  <div className={styles.clippingHeader}>
+                    <span className={styles.outletLogo}>{item.outletLogo}</span>
+                    <span className={styles.outletName}>{item.outlet}</span>
+                  </div>
+                  <h3 className={styles.clippingTitle}>{item.title}</h3>
+                  <div className={styles.clippingMeta}>
+                    <span className={styles.clippingDate}>{item.date}</span>
+                    <span className={styles.clippingType}>
+                      {item.type === 'tv' ? '📺' : 
+                       item.type === 'radio' ? '📻' : 
+                       item.type === 'print' ? '📰' : '💻'}
+                    </span>
                   </div>
                 </div>
+                <div className={styles.clippingTape}></div>
               </article>
             ))}
           </div>
+        </section>
+
+        {/* Alt Bilgi - Basın Rozeti */}
+        <section className={styles.pressFooter}>
+          <div className={styles.pressBadge}>
+            <div className={styles.badgeContent}>
+              <span className={styles.badgeIcon}>📰</span>
+              <span className={styles.badgeText}>BASIN</span>
+            </div>
+            <div className={styles.badgeLanyard}></div>
+          </div>
+          <p className={styles.footerText}>
+            "Haber, toplumun aynasıdır."
+          </p>
         </section>
       </main>
       
@@ -97,4 +198,3 @@ export default function PressPage() {
     </div>
   );
 }
-

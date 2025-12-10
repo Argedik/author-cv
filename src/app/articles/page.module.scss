@@ -454,3 +454,314 @@
   padding: 0;
 }
 
+// =====================================================
+// MOBİL - PARŞÖMEN KOLEKSİYONU TASARIMI
+// =====================================================
+
+.mobileScrollCollection {
+  padding: 0;
+}
+
+.scrollHeader {
+  text-align: center;
+  padding: 25px 20px;
+  margin-bottom: 20px;
+  background: linear-gradient(180deg, 
+    rgba(196, 163, 90, 0.12) 0%, 
+    transparent 100%);
+  border-radius: 16px;
+  position: relative;
+  
+  &::before {
+    content: '❧';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    color: rgba(196, 163, 90, 0.4);
+  }
+}
+
+.scrollIcon {
+  font-size: 2.8rem;
+  display: block;
+  margin-bottom: 10px;
+  animation: scrollUnroll 3s ease-in-out infinite;
+}
+
+@keyframes scrollUnroll {
+  0%, 100% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.05); }
+}
+
+.scrollTitle {
+  font-family: 'Georgia', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #3d2e1f;
+  margin: 0 0 8px;
+  letter-spacing: 1px;
+}
+
+.scrollSubtitle {
+  font-family: 'Georgia', serif;
+  font-size: 0.85rem;
+  color: #8b7355;
+  margin: 0;
+  font-style: italic;
+}
+
+// Parşömen Kartları
+.scrollCards {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.scrollCard {
+  animation: scrollSlideIn 0.5s ease backwards;
+}
+
+@keyframes scrollSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+.scrollCardInner {
+  background: linear-gradient(180deg, 
+    #f8f0e3 0%, 
+    #efe5d5 50%,
+    #e5d9c5 100%);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 15px rgba(139, 115, 85, 0.15),
+    inset 0 0 30px rgba(139, 69, 19, 0.05);
+  
+  // Parşömen kenar efekti
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid transparent;
+    border-image: linear-gradient(180deg, 
+      rgba(139, 90, 43, 0.3) 0%, 
+      rgba(196, 163, 90, 0.4) 50%, 
+      rgba(139, 90, 43, 0.3) 100%) 1;
+    pointer-events: none;
+  }
+  
+  // Yaşlanma efekti
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(ellipse at 10% 10%, rgba(139, 69, 19, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 90%, rgba(139, 69, 19, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+.scrollDecoration {
+  text-align: center;
+  padding: 15px 15px 10px;
+  border-bottom: 1px dashed rgba(196, 163, 90, 0.3);
+  position: relative;
+  
+  &::before,
+  &::after {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6rem;
+    color: rgba(196, 163, 90, 0.5);
+  }
+  
+  &::before {
+    left: 20px;
+  }
+  
+  &::after {
+    right: 20px;
+  }
+}
+
+.decorIcon {
+  font-size: 1.8rem;
+}
+
+.scrollContent {
+  padding: 15px 18px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.scrollCategory {
+  display: inline-block;
+  font-family: 'Georgia', serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #c4a35a;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+  padding: 4px 12px;
+  background: rgba(196, 163, 90, 0.12);
+  border-radius: 12px;
+}
+
+.scrollCardTitle {
+  font-family: 'Georgia', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3d2e1f;
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+.scrollCardDesc {
+  font-family: 'Georgia', serif;
+  font-size: 0.85rem;
+  color: #6b5b4f;
+  line-height: 1.6;
+  margin: 0 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.scrollMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-top: 10px;
+  border-top: 1px dotted rgba(196, 163, 90, 0.3);
+}
+
+.scrollDate {
+  font-family: 'Georgia', serif;
+  font-size: 0.75rem;
+  color: #8b7355;
+}
+
+.scrollReadTime {
+  font-family: 'Georgia', serif;
+  font-size: 0.75rem;
+  color: #c4a35a;
+  font-weight: 500;
+}
+
+.scrollActions {
+  display: flex;
+  gap: 10px;
+}
+
+.scrollReadBtn {
+  flex: 1;
+  font-family: 'Georgia', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  background: linear-gradient(135deg, #8B5A2B 0%, #6B4423 100%);
+  padding: 12px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(139, 90, 43, 0.25);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 90, 43, 0.35);
+  }
+}
+
+.scrollSaveBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: 2px solid rgba(196, 163, 90, 0.4);
+  background: rgba(255, 252, 245, 0.8);
+  color: #c4a35a;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background: rgba(196, 163, 90, 0.15);
+    border-color: #c4a35a;
+  }
+  
+  &.saved {
+    background: linear-gradient(135deg, #c4a35a 0%, #a8893f 100%);
+    border-color: #c4a35a;
+    color: #fff;
+  }
+}
+
+.scrollBottom {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 15px;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(196, 163, 90, 0.3), transparent);
+  }
+}
+
+.scrollWax {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, 
+    #c4392f 0%, 
+    #8B0000 60%, 
+    #5c0000 100%);
+  box-shadow: 
+    0 3px 8px rgba(139, 0, 0, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  position: relative;
+  
+  &::before {
+    content: ' س';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Georgia', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
