@@ -184,7 +184,7 @@ export default function NewsPage() {
                           {expandedNewsId === news.id && (
                             <div className={styles.timelineExpanded}>
                               <p className={styles.timelineDesc}>{news.description}</p>
-                              <a href={news.link} className={styles.timelineLink} target="_blank" rel="noopener noreferrer">
+                              <a href={news.url} className={styles.timelineLink} target="_blank" rel="noopener noreferrer">
                                 Haberi Oku →
                               </a>
                             </div>
