@@ -140,11 +140,11 @@ export default function AcademicPage() {
                   <div className={styles.pubMeta}>
                     <span className={styles.pubType}>{pub.type}</span>
                     <span className={styles.pubYear}>{pub.year}</span>
-                    {pub.journal && <span className={styles.pubJournal}>{pub.journal}</span>}
+                    {pub.publisher && <span className={styles.pubJournal}>{pub.publisher}</span>}
                   </div>
                 </div>
                 <div className={styles.pubStatus}>
-                  {pub.status === 'published' ? '✓' : '◌'}
+                  ✓
                 </div>
               </article>
             ))}
