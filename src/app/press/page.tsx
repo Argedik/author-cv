@@ -12,8 +12,22 @@ export default function PressPage() {
   const scrolled = useScroll(50);
   const [selectedType, setSelectedType] = useState<string | null>(null);
 
+  const getTypeFromMediaType = (mediaType: string): string | null => {
+    const typeMap: Record<string, string> = {
+      'Gazete': 'newspaper',
+      'Dergi': 'magazine',
+      'TV': 'tv',
+      'Radyo': 'radio',
+      'Online': 'online',
+    };
+    return typeMap[mediaType] || null;
+  };
+
   const filteredItems = selectedType 
-    ? PRESS_PAGE_DATA.pressItems.filter(item => item.type === selectedType)
+    ? PRESS_PAGE_DATA.pressItems.filter(item => {
+        const mappedType = getTypeFromMediaType(selectedType);
+        return mappedType ? item.type === mappedType : false;
+      })
     : PRESS_PAGE_DATA.pressItems;
 
   return (
@@ -131,10 +145,10 @@ export default function PressPage() {
                 className={`${styles.filterTab} ${selectedType === type ? styles.active : ''}`}
                 onClick={() => setSelectedType(type)}
               >
-                {type === 'tv' ? '📺 TV' : 
-                 type === 'radio' ? '📻 Radyo' : 
-                 type === 'print' ? '📰 Basılı' : 
-                 type === 'online' ? '💻 Online' : type}
+                {type === 'TV' ? '📺 TV' : 
+                 type === 'Radyo' ? '📻 Radyo' : 
+                 type === 'Gazete' || type === 'Dergi' ? '📰 Basılı' : 
+                 type === 'Online' ? '💻 Online' : type}
               </button>
             ))}
           </div>
@@ -169,7 +183,7 @@ export default function PressPage() {
                     <span className={styles.clippingType}>
                       {item.type === 'tv' ? '📺' : 
                        item.type === 'radio' ? '📻' : 
-                       item.type === 'print' ? '📰' : '💻'}
+                       item.type === 'newspaper' || item.type === 'magazine' ? '📰' : '💻'}
                     </span>
                   </div>
                 </div>
