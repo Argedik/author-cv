@@ -12,9 +12,107 @@ import styles from './BooksSection.module.scss';
 
 export default function BooksSection({ books, onReview }: BooksSectionProps) {
   const [currentBookIndex, setCurrentBookIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
   const swiperRef = useRef<SwiperType | null>(null);
   const gridSectionRef = useRef<HTMLDivElement | null>(null);
 
+  // Mobil kontrolü
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Mobil - Kitap Rafı Görünümü
+  if (isMobile) {
+    return (
+      <section className={styles.booksSection}>
+        {/* Mobil Başlık */}
+        <div className={styles.mobileHeader}>
+          <div className={styles.shelfDecoration}>
+            <span className={styles.shelfIcon}>📖</span>
+          </div>
+          <h2 className={styles.mobileTitle}>Kitaplığım</h2>
+          <p className={styles.mobileSubtitle}>Kapağa dokunarak kitabı keşfedin</p>
+        </div>
+
+        {/* Kitap Rafı */}
+        <div className={styles.bookshelf}>
+          {/* Raf Üst Kısmı */}
+          <div className={styles.shelfTop}>
+            {books.map((book, index) => (
+              <div 
+                key={book.id}
+                className={`${styles.bookSpine} ${selectedBookId === book.id ? styles.selected : ''}`}
+                onClick={() => setSelectedBookId(selectedBookId === book.id ? null : book.id)}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div 
+                  className={styles.spineContent}
+                  style={{ 
+                    background: `linear-gradient(180deg, 
+                      hsl(${(index * 45) % 360}, 35%, 45%) 0%, 
+                      hsl(${(index * 45) % 360}, 40%, 35%) 100%)` 
+                  }}
+                >
+                  <span className={styles.spineTitle}>{book.title}</span>
+                  <span className={styles.spineAuthor}>{book.author || 'Süleyman Karakaş'}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Raf Tahtası */}
+          <div className={styles.shelfBoard}>
+            <div className={styles.shelfShadow}></div>
+          </div>
+        </div>
+
+        {/* Seçili Kitap Detayı */}
+        {selectedBookId && (
+          <div className={styles.selectedBookDetail}>
+            {books.filter(b => b.id === selectedBookId).map((book) => (
+              <div key={book.id} className={styles.bookPreview}>
+                <div className={styles.previewImage}>
+                  <img src={book.image} alt={book.title} />
+                </div>
+                <div className={styles.previewInfo}>
+                  <h3 className={styles.previewTitle}>{book.title}</h3>
+                  <p className={styles.previewAuthor}>{book.author || 'Süleyman Karakaş'}</p>
+                  <p className={styles.previewDesc}>{book.description}</p>
+                  <button 
+                    className={styles.previewButton}
+                    onClick={() => onReview && onReview(book)}
+                  >
+                    İncele
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Tüm Kitaplar Listesi */}
+        <div className={styles.mobileBooksList}>
+          <h3 className={styles.listTitle}>
+            <span className={styles.listIcon}>📚</span>
+            Tüm Kitaplar
+          </h3>
+          <div className={styles.booksGrid}>
+            {books.map((book, index) => (
+              <BookCard key={book.id} book={book} index={index} onReview={onReview} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Desktop - Slider Görünümü
   return (
     <section className={styles.booksSection}>
       {/* Kitap Yığını Galerisi Başlığı */}

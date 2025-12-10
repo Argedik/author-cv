@@ -35,9 +35,9 @@ export const FOOTER_DATA: FooterData = {
   social: [
     { name: 'YouTube', url: 'https://www.youtube.com/',},
     { name: 'X', url: 'https://x.com/'},
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/',},
-    { name: 'Facebook', url: 'https://www.facebook.com/'},
-    { name: 'Instagram', url: 'https://www.instagram.com/'},
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/s%C3%BCleyman-karaka%C5%9F-886896103/',},
+    { name: 'Facebook', url: 'https://www.facebook.com/share/14PQeKi9wsQ/?mibextid=wwXIfr'},
+    { name: 'Instagram', url: 'https://www.instagram.com/suleyman7karakas/'},
     { name: 'Spotify', url: 'https://www.spotify.com/'},
   ],
   contact: {

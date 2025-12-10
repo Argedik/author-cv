@@ -22,6 +22,17 @@ import 'swiper/css/effect-coverflow';
 
 import styles from './page.module.scss';
 
+// Kategori ikonları
+const categoryIcons: Record<string, string> = {
+  'tefsir': '📜',
+  'hadis': '📿',
+  'tasavvuf': '🕌',
+  'fıkıh': '⚖️',
+  'siyer': '🌙',
+  'ahlak': '💫',
+  'all': '📚',
+};
+
 // LocalStorage key
 const READING_LIST_KEY = 'suleymankarakas_reading_list';
 
@@ -32,8 +43,9 @@ export default function ArticlesPage() {
   const [readingList, setReadingList] = useState<Article[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [isReadingListModalOpen, setIsReadingListModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Client-side hydration fix
+  // Client-side hydration fix & Mobil kontrolü
   useEffect(() => {
     setIsClient(true);
     // LocalStorage'dan okuma listesini al
@@ -46,6 +58,14 @@ export default function ArticlesPage() {
         console.error('Reading list parse error');
       }
     }
+    
+    // Mobil kontrolü
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Okuma listesini kaydet
@@ -153,78 +173,138 @@ export default function ArticlesPage() {
                 </p>
               )}
 
-              {/* Swiper Coverflow ile Makaleler */}
+              {/* Makaleler Görünümü */}
               {filteredArticles.length > 0 ? (
-                <div className={styles.swiperContainer}>
-                  <Swiper
-                    effect="coverflow"
-                    grabCursor={true}
-                    centeredSlides={true}
-                    slidesPerView="auto"
-                    coverflowEffect={{
-                      rotate: 30,
-                      stretch: 0,
-                      depth: 150,
-                      modifier: 1.2,
-                      slideShadows: true,
-                    }}
-                    modules={[EffectCoverflow]}
-                    className={styles.articlesSwiper}
-                    breakpoints={{
-                      320: {
-                        slidesPerView: 1,
-                        spaceBetween: 20,
-                        coverflowEffect: {
-                          rotate: 15,
-                          stretch: 0,
-                          depth: 80,
-                          modifier: 1.1,
+                isMobile ? (
+                  /* MOBİL - Parşömen Koleksiyonu Görünümü */
+                  <div className={styles.mobileScrollCollection}>
+                    {/* Parşömen Başlığı */}
+                    <div className={styles.scrollHeader}>
+                      <span className={styles.scrollIcon}>📜</span>
+                      <h3 className={styles.scrollTitle}>İlim Hazinesi</h3>
+                      <p className={styles.scrollSubtitle}>Makaleye dokunarak okumaya başlayın</p>
+                    </div>
+
+                    {/* Parşömen Kartları */}
+                    <div className={styles.scrollCards}>
+                      {filteredArticles.map((article, index) => (
+                        <div 
+                          key={article.id} 
+                          className={styles.scrollCard}
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                          <div className={styles.scrollCardInner}>
+                            {/* Üst Süsleme */}
+                            <div className={styles.scrollDecoration}>
+                              <span className={styles.decorIcon}>
+                                {categoryIcons[article.category] || '📚'}
+                              </span>
+                            </div>
+
+                            {/* İçerik */}
+                            <div className={styles.scrollContent}>
+                              <span className={styles.scrollCategory}>
+                                {ARTICLE_CATEGORIES.find(c => c.key === article.category)?.label || article.category}
+                              </span>
+                              <h4 className={styles.scrollCardTitle}>{article.title}</h4>
+                              <p className={styles.scrollCardDesc}>{article.description}</p>
+                              
+                              <div className={styles.scrollMeta}>
+                                <span className={styles.scrollDate}>{article.date}</span>
+                                <span className={styles.scrollReadTime}>{article.readTime}</span>
+                              </div>
+
+                              <div className={styles.scrollActions}>
+                                <a 
+                                  href={article.url} 
+                                  className={styles.scrollReadBtn}
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                >
+                                  Oku
+                                </a>
+                                <button 
+                                  className={`${styles.scrollSaveBtn} ${readingList.some(a => a.id === article.id) ? styles.saved : ''}`}
+                                  onClick={() => handleAddToReadingList(article)}
+                                  aria-label={readingList.some(a => a.id === article.id) ? 'Listeden çıkar' : 'Listeye ekle'}
+                                >
+                                  {readingList.some(a => a.id === article.id) ? '✓' : '+'}
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Alt Süsleme */}
+                            <div className={styles.scrollBottom}>
+                              <div className={styles.scrollWax}></div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  /* DESKTOP - Swiper Coverflow ile Makaleler */
+                  <div className={styles.swiperContainer}>
+                    <Swiper
+                      effect="coverflow"
+                      grabCursor={true}
+                      centeredSlides={true}
+                      slidesPerView="auto"
+                      coverflowEffect={{
+                        rotate: 30,
+                        stretch: 0,
+                        depth: 150,
+                        modifier: 1.2,
+                        slideShadows: true,
+                      }}
+                      modules={[EffectCoverflow]}
+                      className={styles.articlesSwiper}
+                      breakpoints={{
+                        768: {
+                          slidesPerView: 1.2,
+                          spaceBetween: 30,
+                          coverflowEffect: {
+                            rotate: 20,
+                            stretch: 0,
+                            depth: 100,
+                            modifier: 1.15,
+                          },
                         },
-                      },
-                      640: {
-                        slidesPerView: 1.2,
-                        spaceBetween: 30,
-                        coverflowEffect: {
-                          rotate: 20,
-                          stretch: 0,
-                          depth: 100,
-                          modifier: 1.15,
+                        1024: {
+                          slidesPerView: 1.5,
+                          spaceBetween: 40,
+                          coverflowEffect: {
+                            rotate: 25,
+                            stretch: 0,
+                            depth: 120,
+                            modifier: 1.2,
+                          },
                         },
-                      },
-                      1024: {
-                        slidesPerView: 1.5,
-                        spaceBetween: 40,
-                        coverflowEffect: {
-                          rotate: 25,
-                          stretch: 0,
-                          depth: 120,
-                          modifier: 1.2,
+                        1280: {
+                          slidesPerView: 2,
+                          spaceBetween: 50,
+                          coverflowEffect: {
+                            rotate: 30,
+                            stretch: 0,
+                            depth: 150,
+                            modifier: 1.2,
+                          },
                         },
-                      },
-                      1280: {
-                        slidesPerView: 2,
-                        spaceBetween: 50,
-                        coverflowEffect: {
-                          rotate: 30,
-                          stretch: 0,
-                          depth: 150,
-                          modifier: 1.2,
-                        },
-                      },
-                    }}
-                  >
-                    {filteredArticles.map((article, index) => (
-                      <SwiperSlide key={article.id} className={styles.swiperSlide}>
-                        <ArticleCard 
-                          article={article} 
-                          index={index}
-                          onAddToReadingList={handleAddToReadingList}
-                          isInReadingList={readingList.some(a => a.id === article.id)}
-                        />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                </div>
+                      }}
+                    >
+                      {filteredArticles.map((article, index) => (
+                        <SwiperSlide key={article.id} className={styles.swiperSlide}>
+                          <ArticleCard 
+                            article={article} 
+                            index={index}
+                            onAddToReadingList={handleAddToReadingList}
+                            isInReadingList={readingList.some(a => a.id === article.id)}
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                )
               ) : (
                 <div className={styles.emptyState}>
                   <span className={styles.emptyIcon}>📄</span>

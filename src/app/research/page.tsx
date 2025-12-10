@@ -6,13 +6,12 @@ import { RESEARCH_PAGE_DATA } from '@/data/pages/research';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import { FOOTER_DATA } from '@/data/footer';
-import ResearchTimeline from '@/components/Ideas/ResearchTimeline/ResearchTimeline';
-import ResearchStats from '@/components/Ideas/ResearchStats/ResearchStats';
 import styles from './page.module.scss';
 
 export default function ResearchPage() {
   const scrolled = useScroll(50);
   const [selectedCategory, setSelectedCategory] = useState('Tümü');
+  const [openNoteId, setOpenNoteId] = useState<number | null>(null);
 
   const filteredProjects = selectedCategory === 'Tümü'
     ? RESEARCH_PAGE_DATA.projects
@@ -20,19 +19,10 @@ export default function ResearchPage() {
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'completed': return 'Tamamlandı';
-      case 'ongoing': return 'Devam Ediyor';
-      case 'planned': return 'Planlanıyor';
+      case 'completed': return '✓ Tamamlandı';
+      case 'ongoing': return '◉ Devam Ediyor';
+      case 'planned': return '○ Planlanıyor';
       default: return status;
-    }
-  };
-
-  const getStatusClass = (status: string) => {
-    switch (status) {
-      case 'completed': return styles.completed;
-      case 'ongoing': return styles.ongoing;
-      case 'planned': return styles.planned;
-      default: return '';
     }
   };
 
@@ -40,36 +30,70 @@ export default function ResearchPage() {
     <div className={styles.page}>
       <Header scrolled={scrolled} />
       <main className={styles.main}>
-        {/* Hero Bölümü */}
-        <section className={styles.heroSection}>
-          <div className={styles.heroBackground}></div>
-          <div className={styles.heroContent}>
-            <span className={styles.sectionLabel}>{RESEARCH_PAGE_DATA.subtitle}</span>
-            <h1 className={styles.title}>{RESEARCH_PAGE_DATA.title}</h1>
-            <p className={styles.description}>{RESEARCH_PAGE_DATA.description}</p>
+        {/* Laboratuvar Defteri Hero */}
+        <section className={styles.labHero}>
+          <div className={styles.notebookCover}>
+            <div className={styles.coverSpiral}>
+              {[...Array(12)].map((_, i) => (
+                <span key={i} className={styles.spiralRing}></span>
+              ))}
+            </div>
+            <div className={styles.coverContent}>
+              <div className={styles.coverLabel}>ARAŞTIRMA DEFTERİ</div>
+              <h1 className={styles.coverTitle}>{RESEARCH_PAGE_DATA.title}</h1>
+              <div className={styles.coverMeta}>
+                <span className={styles.coverAuthor}>Süleyman Karakaş</span>
+                <span className={styles.coverYear}>2024</span>
+              </div>
+              <p className={styles.coverDesc}>{RESEARCH_PAGE_DATA.description}</p>
+            </div>
+            <div className={styles.coverSticker}>
+              <span>🔬</span>
+              <span className={styles.stickerText}>İLİM</span>
+            </div>
           </div>
         </section>
 
-        {/* Alıntı */}
-        <section className={styles.quoteSection}>
-          <div className={styles.quoteContainer}>
-            <span className={styles.quoteIcon}>"</span>
-            <blockquote className={styles.quote}>{RESEARCH_PAGE_DATA.quote}</blockquote>
-            <cite className={styles.quoteAuthor}>— {RESEARCH_PAGE_DATA.quoteAuthor}</cite>
+        {/* Alıntı - Yapışkan Not */}
+        <section className={styles.stickyNoteSection}>
+          <div className={styles.stickyNote}>
+            <div className={styles.stickyPin}></div>
+            <blockquote className={styles.stickyQuote}>
+              "{RESEARCH_PAGE_DATA.quote}"
+            </blockquote>
+            <cite className={styles.stickyAuthor}>— {RESEARCH_PAGE_DATA.quoteAuthor}</cite>
           </div>
         </section>
 
-        {/* Ideas Component 1: Research Stats */}
-        <ResearchStats />
+        {/* İstatistikler - Araştırma Metrikleri */}
+        <section className={styles.metricsSection}>
+          <div className={styles.metricsHeader}>
+            <span className={styles.clipIcon}>📎</span>
+            <h2>Araştırma Metrikleri</h2>
+          </div>
+          <div className={styles.metricsBoard}>
+            {RESEARCH_PAGE_DATA.stats.map((stat, index) => (
+              <div 
+                key={stat.id} 
+                className={styles.metricCard}
+                style={{ transform: `rotate(${(index - 1.5) * 2}deg)` }}
+              >
+                <span className={styles.metricValue}>{stat.value}</span>
+                <span className={styles.metricLabel}>{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        {/* Kategori Filtreleme */}
-        <section className={styles.filterSection}>
-          <div className={styles.filterContainer}>
-            {RESEARCH_PAGE_DATA.categories.map((category) => (
+        {/* Kategori Sekmeler - Defter Sekmeleri */}
+        <section className={styles.tabsSection}>
+          <div className={styles.notebookTabs}>
+            {RESEARCH_PAGE_DATA.categories.map((category, index) => (
               <button
                 key={category}
-                className={`${styles.filterButton} ${selectedCategory === category ? styles.active : ''}`}
+                className={`${styles.tab} ${selectedCategory === category ? styles.activeTab : ''}`}
                 onClick={() => setSelectedCategory(category)}
+                style={{ '--tab-index': index } as React.CSSProperties}
               >
                 {category}
               </button>
@@ -77,37 +101,79 @@ export default function ResearchPage() {
           </div>
         </section>
 
-        {/* Projeler Grid */}
-        <section className={styles.projectsSection}>
-          <div className={styles.projectsGrid}>
-            {filteredProjects.map((project) => (
-              <article key={project.id} className={styles.projectCard}>
-                <div className={styles.projectIcon}>{project.icon}</div>
-                <div className={styles.projectHeader}>
-                  <span className={styles.projectYear}>{project.year}</span>
-                  <span className={`${styles.projectStatus} ${getStatusClass(project.status)}`}>
-                    {getStatusLabel(project.status)}
-                  </span>
-                </div>
-                <h3 className={styles.projectTitle}>{project.title}</h3>
-                <p className={styles.projectDescription}>{project.description}</p>
-                <div className={styles.projectTags}>
-                  {project.tags.map((tag, index) => (
-                    <span key={index} className={styles.tag}>{tag}</span>
+        {/* Projeler - Araştırma Notları */}
+        <section className={styles.notesSection}>
+          <div className={styles.notesGrid}>
+            {filteredProjects.map((project, index) => (
+              <article 
+                key={project.id} 
+                className={`${styles.researchNote} ${openNoteId === project.id ? styles.expanded : ''}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+                onClick={() => setOpenNoteId(openNoteId === project.id ? null : project.id)}
+              >
+                {/* Defter Kağıdı Çizgileri */}
+                <div className={styles.paperLines}>
+                  {[...Array(8)].map((_, i) => (
+                    <span key={i} className={styles.line}></span>
                   ))}
                 </div>
-                <span className={styles.projectCategory}>{project.category}</span>
+
+                {/* Sol Kenar Boşluğu */}
+                <div className={styles.paperMargin}></div>
+
+                {/* İçerik */}
+                <div className={styles.noteContent}>
+                  <div className={styles.noteHeader}>
+                    <span className={styles.noteIcon}>{project.icon}</span>
+                    <div className={styles.noteHeaderText}>
+                      <span className={styles.noteYear}>{project.year}</span>
+                      <span className={`${styles.noteStatus} ${styles[project.status]}`}>
+                        {getStatusLabel(project.status)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <h3 className={styles.noteTitle}>{project.title}</h3>
+                  
+                  <p className={styles.noteDescription}>{project.description}</p>
+
+                  <div className={styles.noteTags}>
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className={styles.noteTag}>#{tag}</span>
+                    ))}
+                  </div>
+
+                  <div className={styles.noteCategory}>
+                    <span className={styles.categoryIcon}>📂</span>
+                    {project.category}
+                  </div>
+                </div>
+
+                {/* Sayfa Numarası */}
+                <div className={styles.pageNumber}>
+                  Sayfa {index + 1}
+                </div>
               </article>
             ))}
           </div>
         </section>
 
-        {/* Ideas Component 2: Research Timeline */}
-        <ResearchTimeline />
+        {/* Alt Bilgi - Defter Kapağı Arkası */}
+        <section className={styles.backCover}>
+          <div className={styles.backContent}>
+            <span className={styles.backIcon}>📚</span>
+            <p className={styles.backText}>
+              Bu araştırma defteri, ilmi çalışmalarımın bir özetini içermektedir.
+            </p>
+            <div className={styles.backSignature}>
+              <span>Süleyman Karakaş</span>
+              <span className={styles.signatureDate}>İstanbul, 2024</span>
+            </div>
+          </div>
+        </section>
       </main>
       
       <Footer data={FOOTER_DATA} />
     </div>
   );
 }
-
