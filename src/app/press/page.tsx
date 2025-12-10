@@ -112,11 +112,11 @@ export default function PressPage() {
               <div className={styles.screenContent}>
                 {PRESS_PAGE_DATA.quotes.slice(0, 1).map((quote) => (
                   <div key={quote.id} className={styles.quoteDisplay}>
-                    <div className={styles.channelBadge}>{quote.outlet}</div>
+                    <div className={styles.channelBadge}>{quote.source}</div>
                     <blockquote className={styles.tvQuote}>
-                      "{quote.text}"
+                      "{quote.quote}"
                     </blockquote>
-                    <cite className={styles.quoterName}>— {quote.author}</cite>
+                    <cite className={styles.quoterName}>— {quote.source}</cite>
                   </div>
                 ))}
                 <div className={styles.liveIndicator}>
